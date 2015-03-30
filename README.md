@@ -33,3 +33,4 @@
 * [Brad Spry](bradspry) (UNC Charlotte)
 * Diego Pino (REUNA)
 * Lingling Jiang (UTSC)
+* [Melissa Anez](https://github.com/manez) (Islandora Foundation)
