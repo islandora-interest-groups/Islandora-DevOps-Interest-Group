@@ -34,3 +34,4 @@
 * Diego Pino (REUNA)
 * Lingling Jiang (UTSC)
 * [Melissa Anez](https://github.com/manez) (Islandora Foundation)
+* [Kevin Clarke](https://github.com/ksclarke) (UCLA)
