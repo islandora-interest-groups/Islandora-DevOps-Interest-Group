@@ -3,6 +3,7 @@
 ## Convenors
 
 * [Andy Wagner](https://github.com/rarian) (University of Toronto)
+* [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
 * Co-convenor(s) welcomed!
 
 ## Terms of Reference
