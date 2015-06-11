@@ -21,7 +21,7 @@
 * The convenors will produce a report to be submitted to the Islandora Roadmap Committee following the IDOIG’s meeting.
 
 ## Links
-
+* [Islandora DevOps Interest Group Wiki](https://github.com/Islandora/Islandora-DevOps-Interest-Group/wiki)
 * [Islandora Deployments](https://github.com/Islandora/islandora_deployments)
 * [Islandora Vagrant](https://github.com/Islandora-Labs/islandora_vagrant)
 
