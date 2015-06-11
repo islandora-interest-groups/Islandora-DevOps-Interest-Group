@@ -36,3 +36,10 @@
 * Lingling Jiang (UTSC)
 * [Melissa Anez](https://github.com/manez) (Islandora Foundation)
 * [Kevin Clarke](https://github.com/ksclarke) (UCLA)
+* Gary Phillips
+* Gavin Morris
+* Logan Cox
+* Alex Garnett
+* Mark McFate
+* Phil Redmon
+* Randy Fischer
