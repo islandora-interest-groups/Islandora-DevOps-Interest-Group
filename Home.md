@@ -16,7 +16,7 @@
 	
 ### Development Box (All Roles or Services on one standalone VM or PC) 
 #### Virtual Machine settings
-#### Vagrant [https://www.vagrantup.com/](https://www.vagrantup.com/)
+##### Vagrant [https://www.vagrantup.com/](https://www.vagrantup.com/)
 ##### Virtualbox (Windows, OSX, Linux) [https://www.virtualbox.org/](https://www.virtualbox.org/)
 ##### VMWare	
 (OSX - Fusion) [http://www.vmware.com/products/fusion/](http://www.vmware.com/products/fusion/)  
