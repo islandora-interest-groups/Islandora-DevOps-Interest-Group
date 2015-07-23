@@ -18,7 +18,7 @@
 #### Virtual Machine settings
 ##### Virtualbox (Windows, OSX, Linux) [https://www.virtualbox.org/](https://www.virtualbox.org/)
 ##### VMWare	
-(OSX - Fusion) [http://www.vmware.com/products/fusion/](http://www.vmware.com/products/fusion/)
+(OSX - Fusion) [http://www.vmware.com/products/fusion/](http://www.vmware.com/products/fusion/)  
 (Windows - Workstation) [http://www.vmware.com/products/workstation/](http://www.vmware.com/products/workstation/)
 #### Minimal Requirements: (examples)
 > 1 x 2.0 GHz Intel Core i3 CPU (x64)
