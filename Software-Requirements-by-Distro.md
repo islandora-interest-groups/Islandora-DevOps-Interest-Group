@@ -1,5 +1,5 @@
 # RHEL/CENTOS 6.6
-<table border=0 cellpadding=0 cellspacing=0 width=1423 style='border-collapse:
+<table border=0 cellpadding=0 cellspacing=0 width=100% style='border-collapse:
  collapse;'>
  <tr height=15 style='mso-height-source:userset;height:15.75pt'>
   <th height=15 class=xl65 style='height:15.75pt;'>Server
