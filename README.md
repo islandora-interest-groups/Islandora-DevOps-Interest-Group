@@ -43,3 +43,4 @@
 * Mark McFate
 * Phil Redmon
 * Randy Fischer
+* [Jacob Sanford](https://github.com/JacobSanford) (University of New Brunswick)
