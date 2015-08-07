@@ -37,7 +37,7 @@
 * [Melissa Anez](https://github.com/manez) (Islandora Foundation)
 * [Kevin Clarke](https://github.com/ksclarke) (UCLA)
 * Gary Phillips
-* Gavin Morris (http://commonmedia.com) (Common Media Inc.)
+* Gavin Morris ([Common Media Inc.](http://commonmedia.com))
 * Logan Cox
 * Alex Garnett
 * Mark McFate
