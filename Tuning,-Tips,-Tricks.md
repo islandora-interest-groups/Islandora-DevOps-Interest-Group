@@ -9,7 +9,7 @@ JAVA_OPTS="-Xloggc:/var/log/islandora/java/java_gc.log -XX:+PrintGCDetails -XX:+
 
 #Tricks
 
-* Real-time Java Heap Analysis 
+* Snapshot-style Java Heap Analysis 
 ```
 #!/bin/sh
 xyzzy=$(jps | awk '~/Bootstrap/{print }')
