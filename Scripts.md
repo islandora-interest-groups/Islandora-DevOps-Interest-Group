@@ -1,3 +1,5 @@
+Various scripts to help launch Islandora Instances
+
 #Bash
 
 
