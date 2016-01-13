@@ -23,6 +23,7 @@
 * [Islandora DevOps Interest Group Wiki](https://github.com/Islandora/Islandora-DevOps-Interest-Group/wiki)
 * [Islandora Deployments](https://github.com/Islandora/islandora_deployments)
 * [Islandora Vagrant](https://github.com/Islandora-Labs/islandora_vagrant)
+* [Automating content production and loading](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/blob/master/automation.md)
 
 ## Membership
 
