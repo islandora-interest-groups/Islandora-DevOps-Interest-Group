@@ -362,12 +362,12 @@ _Specify drush commit due to issues with newer drush versions and automated test
 
 <code>service openoffice start</code> 
 
-<code>echo -e "check process openoffice\n        matching \"/usr/lib/libreoffice/program/soffice.bin\"\n        start program = \"/etc/init.d/openoffice start\"\n        stop program = \"/etc/init.d/openoffice stop\"\n        if failed host 127.0.0.1 port 8100 then restart\n        if 5 restarts within 5 cycles then timeout" > $MONIT_CONF_DIR/openoffice.conf</code>
+<code>$SCHEDULE_OPENOFFICE_SERVICE_COMMAND</code>
 
 <b>Monit</b>
 _Keep openoffice running as a service with Monit as it has been known to crash._  
 
-<code>$SCHEDULE_OPENOFFICE_SERVICE_COMMAND</code>  
+<code>echo -e "check process openoffice\n        matching \"/usr/lib/libreoffice/program/soffice.bin\"\n        start program = \"/etc/init.d/openoffice start\"\n        stop program = \"/etc/init.d/openoffice stop\"\n        if failed host 127.0.0.1 port 8100 then restart\n        if 5 restarts within 5 cycles then timeout" > $MONIT_CONF_DIR/openoffice.conf</code>
 
 <code>sed -i 's|# set httpd| set httpd|g' $MONIT_CONFIG_FILE</code>  
 
