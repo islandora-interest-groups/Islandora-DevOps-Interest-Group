@@ -223,7 +223,9 @@ _libvpx_
 
 <code>git clone https://chromium.googlesource.com/webm/libvpx.git</code>  
 
-<code>cd libvpx</code>  
+<code>cd libvpx</code>
+
+<code>git checkout 8366a6e4ba95e6d5af040815d2afbb4bfe628d3f</code>
 
 <code>./configure --disable-examples --disable-unit-tests</code>  
 
@@ -354,24 +356,18 @@ _Specify drush commit due to issues with newer drush versions and automated test
 
 <b>OpenOffice</b>  
 
-<code>chown $APACHE_USER:$APACHE_USER `echo $( getent passwd "$APACHE_USER" | cut -d: -f6 )`</code>  
-
 <code>cd /etc/init.d && wget --no-check-certificate https://raw.github.com/discoverygarden/openoffice-init-script/master/openoffice && chmod a+x openoffice</code>  
 
-<code>usermod --shell /bin/sh $APACHE_USER</code>  
+<code>useradd -m -d /home/openoffice openoffice</code>   
 
-<code>sed -i "s|www-data|$APACHE_USER|g" /etc/init.d/openoffice</code>  
-
-<code>service openoffice start</code>
-
-_If Service doesn't start that is because apache has no shell_  
+<code>service openoffice start</code> 
 
 <code>$SCHEDULE_OPENOFFICE_SERVICE_COMMAND</code>
 
 <b>Monit</b>
 _Keep openoffice running as a service with Monit as it has been known to crash._  
 
-<code>echo -e "check process openoffice\n        matching \"/usr/lib/libreoffice/program/soffice.bin\"\n        start program = \"/etc/init.d/openoffice start\"\n        stop program = \"/etc/init.d/openoffice stop\"\n        if failed host 127.0.0.1 port 8100 then restart\n        if 5 restarts within 5 cycles then timeout" > $MONIT_CONF_DIR/openoffice.conf</code>  
+<code>$SCHEDULE_OPENOFFICE_SERVICE_COMMAND</code>  
 
 <code>sed -i 's|# set httpd| set httpd|g' $MONIT_CONFIG_FILE</code>  
 
@@ -872,7 +868,8 @@ _Dependency if bagit is to be used_
 
 <code>git clone  https://github.com/Islandora/internet_archive_bookreader.git bookreader</code>  
 
-<code>wget https://github.com/openseadragon/openseadragon/releases/download/v1.1.1/openseadragon-bin-1.1.1.tar.gz -O openseadragon-bin-1.1.1.tar.gz && tar xf openseadragon-bin-1.1.1.tar.gz && rm -rf openseadragon-bin-1.1.1.tar.gz && mv openseadragon-bin-1.1.1 openseadragon  </code>
+<code>wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && unzip openseadragon-bin-0.9.129.zip && rm -rf openseadragon-bin-0.9.129.zip && mv openseadragon-bin-0.9.129 openseadragon</code>
+
 <code>wget http://www.longtailvideo.com/download/jwplayer-3359.zip && unzip -o jwplayer-3359.zip && rm -rf jwplayer-3359.zip</code>
 NOTE: link no longer available. You can sign up to obtain this but unsure of licensing requirements needs to be discussed
 <code>wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload</code>  
@@ -884,6 +881,8 @@ NOTE: link no longer available. You can sign up to obtain this but unsure of lic
 <code>drush dl imagemagick libraries views ctools oauth chart google_analytics views_slideshow views_responsive_grid strongarm features designkit conditional_styles socialmedia widgets features_extra uuid node_export block_class ldap entity colorbox rules xmlsitemap css_injector</code>  
 
 ### Drupal site install
+
+_Please note that you should consider making the drupal directory permissions more secure. These permissions will allow you to install modules through the drupal web interface however if this functionality is not required recommend locking down permissions using something such as https://github.com/discoverygarden/secure_drupal_file after the install._ 
   
 <code>chown -R $APACHE_USER:$APACHE_USER /var/www/drupal7 </code> 
 
@@ -976,3 +975,7 @@ _<b>NOTE This should be a publicly resolvable URL or viewers will not work for p
 ### Follow-up Notes
 
 _More tesseract languages can be found here:_ [https://code.google.com/p/tesseract-ocr/downloads/list](https://code.google.com/p/tesseract-ocr/downloads/list)
+
+_Recommend locking down Drupal permissons on Production_ e.g. run something like https://github.com/discoverygarden/secure_drupal_file
+
+_Keep server firewalled_ Don't expose any ports to the Internet asides from 80/443. Port 8080 should be kept locked down to localhost only. 
