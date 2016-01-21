@@ -17,34 +17,42 @@ This documentation is provided by the Islandora DevOps Interest Group "as is" an
 * [Environment](#environment)
 * [OS](#operating-system)
 * [Package Installation](#pachake-installation)
+  * [From Apt-Get Package Manager](#from-apt-get)
   * [From Source](#from-source)
-   * ghostscript
-   * ffmpeg
+   * [ghostscript](#ghostscript)
+   * [ffmpeg](#ffmpeg)
+   * [yasm](#yasm)
+   * [x264](#x264)
+   * [aac](#aac}
+   * [libvpx](#libvpx)
+   * [opus](#opus)
   * [From Binaries](#from-binary)
-   * ffmpeg2theora
-   * java
-   * Fits
-   * adore-djatoka
-   * drush
-* Configuration
-* OpenOffice
-* Monit
-* Apache and PHP
-* Setup Databases
-* Install Fedora Commons
-* Fedora Commons Base Install
-* XACML Settings
-* GSearch and Solr
-* GSearch Multithreading
-* Adore-Djatoka
-* Setup Logging
-* Drupal Filter
-* Install Drupal
-* CLUI Config
-* Islandora Modules
-* Libraries
-* Drupal site install
-* Drush Enables and Configuration
+   * [ffmpeg2theora](#ffmpeg2theora)
+   * [java](#java)
+   * [Fits](#fits)
+   * [adore-djatoka](#adore-djatoka-install)
+   * [drush](#drush)
+* [Configuration](#configuration)
+  * [OpenOffice](#openoffice)
+  * [Monit](#monit)
+  * [Apache and PHP](#apache-php)
+  * [Setup MySQL Databases and Server](#setup-mysql)
+* [Install Fedora Commons](#fedora)
+  * [Fedora Commons Base Install](#fedora-base)
+  * [XACML Settings](#xacml-setings)
+  * [GSearch and Solr](#gsearch-solr)
+   * [Solr Configuration](#solr-configuration)
+   * [GSearch Multithreading](#gsearch-multithreading)
+  * [Adore-Djatoka](#adore-djatoka)
+  * [Setup Logging](#setup-logging)
+  * [Drupal Filter](#drupal-filter)
+* [Install Drupal](#install-drupal)
+  * [CLUI Config](#clui-config)
+  * [Islandora Modules](#islandora-modules)
+  * [Libraries](#libraries)
+  * [Drupal site install](#drupal-site-install)
+  * [Drush Enables and Configuration](#drush-enables)
+* [Notes](#notes)
 
 ## Server <a id="server"></a>
 This document is outlining a single (all-in-one) Islandora stack installation using Ubuntu 14.04 LTS system.
@@ -141,8 +149,8 @@ chmod +x ~/islandora-install.properties
 
 ## Software Dependencies <a id="package-installation"></a>
 
-### Software Dependencies Installed by Apt-Get Package Manager
-_accept license agreement and enter root password when asked_
+### Software Dependencies Installed by Apt-Get Package Manager <a id="from-apt-get"></a>
+Accept license agreement and enter root password when asked.
 
 ```
 apt-get -y install oracle-java7-installer libjpeg-dev libpng12-dev libtiff4-dev php5 php5-cli php5-curl php5-dev php5-gd php5-ldap php5-mysql php5-xsl php-apc php-soap php-xml-htmlsax3 php-xml-parser php-xml-rpc php-xml-rpc2 php-xml-rss php-xml-serializer php5-imagick php5-mcrypt php-xml* mysql-server vim curl apache2 rsync wget imagemagick ant libimage-exiftool-perl unzip lame autoconf build-essential checkinstall git libass-dev libfaac-dev libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev librtmp-dev libtheora-dev libtool libvorbis-dev pkg-config texi2html zlib1g-dev ffmpeg2theora poppler-utils python-pip libreoffice libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-draw bibutils ufraw links monit tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra tesseract-ocr-spa tesseract-ocr-ita tesseract-ocr-por tesseract-ocr-hin tesseract-ocr-deu tesseract-ocr-jpn tesseract-ocr-rus
@@ -150,9 +158,9 @@ apt-get -y install oracle-java7-installer libjpeg-dev libpng12-dev libtiff4-dev 
 
 ### Software Dependencies Compiled from Source <a id="from-source"></a> 
 
-#### ghostscript  
+#### ghostscript  <a id="ghostscript"></a>
 
-_Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing our test sets and prevents tiffs from being generated from pdfs. Recommend installing from source to get correct version_
+**Notes:** ubuntu 14.04 installs ghostscript 9.10 which is currently failing our test sets and prevents tiffs from being generated from pdfs. Recommend installing from source to get correct version.
 
 `wget http://downloads.ghostscript.com/public/ghostscript-9.05.tar.gz`
 
@@ -164,14 +172,14 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
  
 `make && make install`
 
-`gs --version` _should return result_.
+`gs --version` should return result.
 
-#### ffmpeg  
+#### ffmpeg  <a id="ffmpeg"></a>
 
 `mkdir ~/ffmpeg-source`
 `cd ~/ffmpeg-source`
 
-#### yasm 
+#### yasm <a id="yasm"></a>
 
 `wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz`
 
@@ -185,7 +193,7 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
 
 `checkinstall --pkgname=yasm --pkgversion="1.2.0" --backup=no --deldoc=yes --fstrans=no --default`
 
-#### x264  
+#### x264 <a id="x264"></a>
 
 `cd ~/ffmpeg-source`
 
@@ -203,7 +211,7 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
 
 `cd ~/ffmpeg-source`
 
-#### aac 
+#### aac  <a id="aac"></a>
 
 `git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git`  
 
@@ -217,7 +225,7 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
 
 `checkinstall --pkgname=fdk-aac --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default`
 
-#### libvpx
+#### libvpx <a id="libvpx"></a>
 
 `cd ~/ffmpeg-source`  
 
@@ -231,7 +239,7 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
 
 `checkinstall --pkgname=libvpx --pkgversion="1:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default`
 
-#### opus  
+#### opus  <a id="opus"></a>
 
 `cd ~/ffmpeg-source`  
 
@@ -247,7 +255,7 @@ _Please note: ubuntu 14.04 installs ghostscript 9.10 which is currently failing 
 
 `checkinstall --pkgname=libopus --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default  `
 
-#### fmpeg_ 
+#### ffmpeg <a id="ffmpeg2"></a>
 
 `cd ~/ffmpeg-source`  
 
@@ -273,28 +281,28 @@ Had to do this to remove strange characters that cause build errors.
 
 `hash -r`
 
-The following should tell apt to not upgrade ffmpeg - we need version 1.1.1  
+The following should tell apt to not upgrade ffmpeg (we need version 1.1.1):  
 
 `apt-mark hold ffmpeg`
 
-Cleanup ffmpeg source code 
+Cleanup ffmpeg source code: 
 
 `ffmpeg -version && cd ~ && rm -rf ~/ffmpeg-source`
 
 ### Software Dependencies installed by Binaries <a id="from-binary"></a>
 
-#### ffmpeg2theora  
+#### ffmpeg2theora  <a id="ffmeg2theora"></a>
 
 `cd ~ && wget http://v2v.cc/~j/ffmpeg2theora/ffmpeg2theora-0.29.linux64.bin && chmod a+x ffmpeg2theora-0.29.linux64.bin && install -m 755 ffmpeg2theora-0.29.linux64.bin /usr/bin/ffmpeg2theora && rm -rf ffmpeg2theora-0.29.linux64.bin`  
 
-#### java  
+#### java  <a id="java"></a>
 Now that java is installed, we can set `JAVA_HOME` and also add it to `~/islandora-install.properties`
  
 `echo $( dirname $( dirname $( readlink -e /usr/bin/java ) ) )`
 
-This should match the oracle java not openjdk  
+This should match the oracle java not openjdk.  
 
-Update `~/islandora-install.properties` to match proper java version  
+Update `~/islandora-install.properties` to match proper java version.  
 
 For example: 
 
@@ -304,13 +312,13 @@ And source again if necessary:
  
 `. ~/islandora-install.properties`
 
-Note that you need to ensure that your update-alternatives point to the right java and javac  
+Note that you need to ensure that your update-alternatives point to the right java and javac.  
 
 `update-alternatives --config java`  
 
 `update-alternatives --config javac`
 
-#### Fits  
+#### Fits  <a id="fits"></a>
 
 `cd /opt`  
 
@@ -318,7 +326,7 @@ Note that you need to ensure that your update-alternatives point to the right ja
 
 `unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh`
 
-#### adore-djatoka
+#### adore-djatoka <a id="adore-djatoka-install"></a>
  
 `cd /opt`  
 
@@ -338,7 +346,7 @@ Make kakadu available on the command line:
 
 `ldconfig`
 
-#### Drush  
+#### Drush  <a id="drush"></a>
 
 Specify drush commit due to issues with newer drush versions and automated tests used by QA:
 
@@ -348,9 +356,9 @@ Specify drush commit due to issues with newer drush versions and automated tests
 
 `ln -s /opt/drush/drush /usr/bin/drush`
 
-### Configurations  
+### Configuration <a id="configuration"></a>  
 
-#### OpenOffice 
+#### OpenOffice <a id="openoffice"></a>
 
 `chown $APACHE_USER:$APACHE_USER echo $( getent passwd "$APACHE_USER" | cut -d: -f6 )`  
 
@@ -366,7 +374,7 @@ If Service doesn't start that is because apache has no shell:
 
 `$SCHEDULE_OPENOFFICE_SERVICE_COMMAND`
 
-#### Monit
+#### Monit <a id="monit"></a>
 
 Keep openoffice running as a service with Monit as it has been known to crash.  
 
@@ -386,7 +394,7 @@ Keep openoffice running as a service with Monit as it has been known to crash.
 
 `service monit restart`
 
-#### Apache and PHP  
+#### Apache and PHP  <a id="apache-php"></a>
 
 Setup apache vhost:  
 
@@ -456,7 +464,7 @@ Setup apache vhost:
 
 `echo "apc.shm_size = 64M" >> $APC_CONFIG_FILE`
 
-#### Setup MySQL Databases and Server 
+#### Setup MySQL Databases and Server <a id="setup-mysql"></a>
 
 Run mysql_secure_installation to ensure security:
  ``` 
@@ -487,9 +495,9 @@ Add:
 
 Dumps will be stored in `/dbbackups` 
 
-### Install Fedora Commons
+### Install Fedora Commons <a id="fedora"></a>
 
-#### Fedora Commons Base Install 
+#### Fedora Commons Base Install  <a id="fedora-base"></a>
 
 _Create install properties file_  
 
@@ -586,7 +594,7 @@ Start and stop tomcat so fedora creates some dirs:
 
 `service tomcat deploy`
 
-#### XACML Settings
+#### XACML Settings <a id="xacml-settings"></a>
 
 Adjust xacml policies: 
  
@@ -606,7 +614,7 @@ Adjust xacml policies:
 
 `mkdir $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && cp *.xml $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && rm -rf ~/islandora-xacml-policies`
 
-#### GSearch and Solr
+#### GSearch and Solr <a id="gsearch-solr"></a>
 
 Grab fedoragsearch and solr - do basic config:  
 
@@ -642,7 +650,7 @@ ant generateIndexingXslt:
 `mv $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt` `$CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt.bak` 
 
 
-#### Solr Configuration 
+##### Solr Configuration <a id="solr-configuration"></a>
  
 `cd ~`  
 
@@ -670,7 +678,7 @@ ant generateIndexingXslt:
 
 `wget https://github.com/discoverygarden/dgi_gsearch_extensions/releases/download/v0.1.1/gsearch_extensions-0.1.1-jar-with-dependencies.jar -O gsearch_extensions-0.1.1-jar-with-dependencies.jar `
 
-### GSearch Multithreading
+##### GSearch Multithreading <a id="gsearch-multithreading"></a>
 
 **OPTIONAL:** Only needed if you want multithreading and you have multiple cores. This allows multithreaded gsearch updates for better performance. Recommend adding one Fgsupdater per core.
 
@@ -684,13 +692,13 @@ ant generateIndexingXslt:
 
 `sed -i "s|FgsUpdaters|$GSEARCH_UPDATER_NAMES|g" $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/fedoragsearch.properties`
 
-#### Adore-Djatoka
+#### Adore-Djatoka <a id="adore-djatoka"></a>
 
 Install djatoka war:  
 
 `cp /opt/adore-djatoka/dist/adore-djatoka.war $CATALINA_HOME/webapps && unzip -o /opt/adore-djatoka/dist/adore-djatoka.war -d $CATALINA_HOME/webapps/adore-djatoka  `
 
-#### Setup Logging
+#### Setup Logging <a id="setup-logging"></a>
 Please note logging still needs some TLC log4j and logrotate clash with some files: 
  
 `cd ~`  
@@ -710,7 +718,7 @@ Please note logging still needs some TLC log4j and logrotate clash with some fil
 `chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`  
 
 
-#### Drupal Filter
+#### Drupal Filter <a id=drupal-filter"></a>
 
 Setup Drupal filter:  
 
@@ -732,15 +740,15 @@ Setup Drupal filter:
 
 `sed -i "s|DRUPAL_DB_PASS|$DRUPAL_DB_PASS|g" $FEDORA_HOME/server/config/filter-drupal.xml`
 
-#### Start fedora fully configured 
+Start fedora fully configured: 
 
 `chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`  
 
 `service tomcat start  `
 
-### Install Drupal  
+### Install Drupal  <a id="install-drupal"></a>
 
-#### CLUI Config 
+#### CLUI Config <a id="clui-config"></a>
 
 **Note:** Some libraries, modules, contrib are optional but are included to support additional theming. e.g. features, strongarm, node_export.
  
@@ -761,7 +769,7 @@ Setup Drupal filter:
 `cd sites/all/modules`  
 
 
-#### Islandora Modules  
+#### Islandora Modules  <a id="islandora-modules"></a>
 
 Git clone the following modules:  
 
@@ -860,11 +868,11 @@ _modslist.sh helper script to handle the git repos to install modules_:
 
 `git clone https://github.com/Islandora/islandora_bagit.git`
 
-Dependency if `bagit` is to be use: 
+Dependency if `bagit` is to be used: 
  
 `/usr/bin/pear install Archive_Tar  `
 
-#### Libraries 
+#### Libraries <a id="libraries"></a>
  
 `cd /var/www/drupal7/sites/all/libraries/`  
 
@@ -883,7 +891,7 @@ Dependency if `bagit` is to be use:
 
 `drush dl imagemagick libraries views ctools oauth chart google_analytics views_slideshow views_responsive_grid strongarm features designkit conditional_styles socialmedia widgets features_extra uuid node_export block_class ldap entity colorbox rules xmlsitemap css_injector`  
 
-#### Drupal site install
+#### Drupal site install <a id="drupal-site-install"></a>
   
 `chown -R $APACHE_USER:$APACHE_USER /var/www/drupal7 ` 
 
@@ -893,7 +901,7 @@ Dependency if `bagit` is to be use:
  
 `chmod 444 /var/www/drupal7/sites/default/settings.php`
 
-#### Drush Enables and Configuration  
+##### Drush Enables and Configuration  
 
 `drush en block color comment contextual dashboard dblog field field_sql_storage field_ui file filter help image list menu node number options overlay path rdf shortcut system taxonomy text toolbar user bartik seven imagemagick libraries views update ctools oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics views_responsive_grid strongarm features designkit conditional_styles fe_block uuid node_export node_export_features widgets socialmedia block_class colorbox rules entity_token css_injector`
 
@@ -981,6 +989,6 @@ drush vset islandora_document_create_fulltext "1"
 
 `drush cc all`
 
-### Follow-up Notes
+### Follow-up Notes <a id="notes"></a>
 
 More tesseract languages can be found here: [https://code.google.com/p/tesseract-ocr/downloads/list](https://code.google.com/p/tesseract-ocr/downloads/list)
