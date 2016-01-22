@@ -12,8 +12,6 @@ This documentation is provided by the Islandora DevOps Interest Group "as is" an
 ## Index
 
 * [Server](#server)
-* Script
-* Install Dependencies and Pre-setup
 * [Environment](#environment)
 * [OS](#operating-system)
 * [Package Installation](#pachake-installation)
@@ -22,7 +20,7 @@ This documentation is provided by the Islandora DevOps Interest Group "as is" an
    * [ghostscript](#ghostscript)
    * [yasm](#yasm)
    * [x264](#x264)
-   * [aac](#aac}
+   * [aac](#aac)
    * [libvpx](#libvpx)
    * [opus](#opus)
    * [ffmpeg](#ffmpeg)
