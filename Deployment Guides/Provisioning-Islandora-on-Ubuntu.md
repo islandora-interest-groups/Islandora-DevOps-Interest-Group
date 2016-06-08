@@ -225,6 +225,8 @@ ffmpeg
 
 `cd libvpx`
 
+`git checkout 8366a6e4ba95e6d5af040815d2afbb4bfe628d3f`
+
 `./configure --disable-examples --disable-unit-tests`
 
 `make`  
@@ -352,17 +354,11 @@ Specify drush commit due to issues with newer drush versions and automated tests
 
 #### OpenOffice <a id="openoffice"></a>
 
-`chown $APACHE_USER:$APACHE_USER echo $( getent passwd "$APACHE_USER" | cut -d: -f6 )`  
+
 
 `cd /etc/init.d && wget --no-check-certificate https://raw.github.com/discoverygarden/openoffice-init-script/master/openoffice && chmod a+x openoffice`  
 
-`usermod --shell /bin/sh $APACHE_USER`  
-
-`sed -i "s|www-data|$APACHE_USER|g" /etc/init.d/openoffice`  
-
-`service openoffice start`
-
-If Service doesn't start that is because apache has no shell:  
+`useradd -m -d /home/openoffice openoffice`
 
 `$SCHEDULE_OPENOFFICE_SERVICE_COMMAND`
 
@@ -872,7 +868,8 @@ Dependency if `bagit` is to be used:
 
 `git clone  https://github.com/Islandora/internet_archive_bookreader.git bookreader`  
 
-`wget https://github.com/openseadragon/openseadragon/releases/download/v1.1.1/openseadragon-bin-1.1.1.tar.gz -O openseadragon-bin-1.1.1.tar.gz && tar xf openseadragon-bin-1.1.1.tar.gz && rm -rf openseadragon-bin-1.1.1.tar.gz && mv openseadragon-bin-1.1.1 openseadragon  `
+`wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && unzip openseadragon-bin-0.9.129.zip && rm -rf openseadragon-bin-0.9.129.zip && mv openseadragon-bin-0.9.129 openseadragon`
+
 `wget http://www.longtailvideo.com/download/jwplayer-3359.zip && unzip -o jwplayer-3359.zip && rm -rf jwplayer-3359.zip`
 **NOTE:** link no longer available. You can sign up to obtain this but licensing requirements are in question. Needs to be discussed.
 `wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload`  
@@ -884,14 +881,16 @@ Dependency if `bagit` is to be used:
 `drush dl imagemagick libraries views ctools oauth chart google_analytics views_slideshow views_responsive_grid strongarm features designkit conditional_styles socialmedia widgets features_extra uuid node_export block_class ldap entity colorbox rules xmlsitemap css_injector`  
 
 #### Drupal site install <a id="drupal-site-install"></a>
-  
+
+**Please note that you should consider making the drupal directory permissions more secure. These permissions will allow you to install modules through the drupal web interface however if this functionality is not required recommend locking down permissions using something such as https://github.com/discoverygarden/secure_drupal_file after the install.**
+
 `chown -R $APACHE_USER:$APACHE_USER /var/www/drupal7 ` 
 
 `drush -y site-install standard --account-name=$DRUPAL_ADMIN_USER --account-pass=$DRUPAL_ADMIN_PASS --db-url=mysql://$DRUPAL_DB_USER:$DRUPAL_DB_PASS@localhost/$DRUPAL_DB_NAME  `
 
 ##### Secure settings.php 
  
-`chmod 444 /var/www/drupal7/sites/default/settings.php`
+`chmod 440 /var/www/drupal7/sites/default/settings.php`
 
 ##### Drush Enables and Configuration  
 
@@ -984,3 +983,7 @@ drush vset islandora_document_create_fulltext "1"
 ### Follow-up Notes <a id="notes"></a>
 
 More tesseract languages can be found here: [https://code.google.com/p/tesseract-ocr/downloads/list](https://code.google.com/p/tesseract-ocr/downloads/list)
+
+Recommend locking down Drupal permissons on Production e.g. run something like https://github.com/discoverygarden/secure_drupal_file
+
+Keep server firewalled in production! Don't expose any ports to the Internet asides from 80/443. Port 8080 should be kept locked down to localhost only. 
