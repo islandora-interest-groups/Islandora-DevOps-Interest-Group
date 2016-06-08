@@ -26,7 +26,7 @@ This documentation is provided by the Islandora DevOps Interest Group "as is" an
    * [ffmpeg](#ffmpeg)
   * [From Binaries](#from-binary)
    * [ffmpeg2theora](#ffmpeg2theora)
-   * [java](#java)
+   * [java and tomcat](#java-tomcat)
    * [Fits](#fits)
    * [adore-djatoka](#adore-djatoka-install)
    * [drush](#drush)
@@ -73,7 +73,7 @@ cat ~/islandora-install.properties
     DRUPAL_ADMIN_USER="admin"              # Drupal admin username to log into Drupal Site
     DRUPAL_ADMIN_PASS="password"           # Drupal admin password to log into Drupal Site
     DRUPAL_SITE_NAME="Islandora Install"   # Drupal site name - displayed on the web site
-    FEDORA_VERSION="3.7.1"                 # Fedora version to install:  3.5 or 3.6.2 or 3.7.0 or 3.7.1
+    FEDORA_VERSION="3.8.1"                 # Fedora version to install:  3.5 or 3.6.2 or 3.7.0 or 3.7.1
     FEDORA_DB_NAME="fedora3"               # Name of fedora MySQL database -> fedora3 is recommended
     FEDORA_DB_USER="fedoraAdmin"           # Fedora db username -> for fedora.fcfg file
     FEDORA_DB_PASS="password"              # Fedora db password -> for fedora.fcfg file
@@ -81,11 +81,12 @@ cat ~/islandora-install.properties
     FEDORA_ADMIN_PASS="password"           # Password for http://localhost:8080/fedora/admin
     FEDORA_USER="fedora"                   # User that tomcat runs as
     FEDORA_HOME="/usr/local/fedora"        # Fedora home dir
-    CATALINA_HOME="$FEDORA_HOME/tomcat"    # Tomcat location
-# NOTE adjust memory so that it is no larger than half of total system memory. Depending on stack deployment this can be adjusted further. We don’t recommend running stack on system with less than 4GB of ram.
+    CATALINA_HOME="/usr/share/tomcat"    # Tomcat location
+    TOMCAT_VERSION="7.0.55"
+# NOTE adjust memory so that it is no larger than half of total system memory. Depending on stack deployment this can be adjusted further. We don’t recommend running stack on system with less than 4GB of ram. Recommend adding -XX:+UseParallelOldGC for multi cpu systems
 
-    JAVA_OPTS="-Xms3072m -Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -  Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat -Dsolr.solr.home=/usr/local/fedora/solr -Dkakadu.home=/opt/adore-djatoka/bin/Linux-x86-64 -Djava.library.path=/opt/adore-djatoka/lib/Linux-x86-64 -DLD_LIBRARY_PATH=/opt/adore-djatoka/lib/Linux-x86-64"
-    JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre  
+    JAVA_OPTS="-Xms3072m -Xmx3072m -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat -Dsolr.solr.home=/usr/local/fedora/solr -Dkakadu.home=/opt/adore-djatoka/bin/Linux-x86-64 -Djava.library.path=/opt/adore-djatoka/lib/Linux-x86-64 -DLD_LIBRARY_PATH=/opt/adore-djatoka/lib/Linux-x86-64"
+    JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre  
     # Moved this down below java install please change to match java version
     TOMCAT_BASE="http://localhost:8080"
     ISLANDORA_BASE="$TOMCAT_BASE/fedora"
@@ -93,12 +94,12 @@ cat ~/islandora-install.properties
     ISLANDORA_BRANCH="7.x"
     TUQUE_BRANCH="1.x"
     ERROR_LEVEL="2"
-    FEDORA_GSEARCH_URL="http://downloads.sourceforge.net/fedora-commons/fedoragsearch-2.7.1.zip"
-    FEDORA_GSEARCH_NAME="fedoragsearch-2.7.1"
+    FEDORA_GSEARCH_URL="http://downloads.sourceforge.net/fedora-commons/fedoragsearch-2.8.zip"
+    FEDORA_GSEARCH_NAME="fedoragsearch-2.8"
     SOLR_VERSION="4.2.0"
     NUMBER_OF_GSEARCH_THREADS="2"          #do one gsearch thread per cpu might want to skip multithreading if you only have 1 cpu
     GSEARCH_UPDATER_NAMES="FgsUpdaters FgsUpdater1"
-    DRUPAL_FILTER_URL="https://github.com/Islandora/islandora_drupal_filter/releases/download/v7.1.3/fcrepo-drupalauthfilter-3.7.1.jar"
+    DRUPAL_FILTER_URL="https://github.com/Islandora/islandora_drupal_filter/releases/download/v7.1.3/fcrepo-drupalauthfilter-3.8.1.jar"
     SOLR_URL="http://archive.apache.org/dist/lucene/solr/4.2.0/solr-4.2.0.tgz"
     SOLR_NAME="solr-4.2.0"
     SOLR_DEFAULT_CORE_PATH="collection1"
@@ -145,7 +146,7 @@ chmod +x ~/islandora-install.properties
 Accept license agreement and enter root password when asked.
 
 ```
-apt-get -y install oracle-java7-installer libjpeg-dev libpng12-dev libtiff4-dev php5 php5-cli php5-curl php5-dev php5-gd php5-ldap php5-mysql php5-xsl php-apc php-soap php-xml-htmlsax3 php-xml-parser php-xml-rpc php-xml-rpc2 php-xml-rss php-xml-serializer php5-imagick php5-mcrypt php-xml* mysql-server vim curl apache2 rsync wget imagemagick ant libimage-exiftool-perl unzip lame autoconf build-essential checkinstall git libass-dev libfaac-dev libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev librtmp-dev libtheora-dev libtool libvorbis-dev pkg-config texi2html zlib1g-dev ffmpeg2theora poppler-utils python-pip libreoffice libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-draw bibutils ufraw links monit tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra tesseract-ocr-spa tesseract-ocr-ita tesseract-ocr-por tesseract-ocr-hin tesseract-ocr-deu tesseract-ocr-jpn tesseract-ocr-rus
+apt-get -y install oracle-java8-installer libjpeg-dev libpng12-dev libtiff4-dev php5 php5-cli php5-curl php5-dev php5-gd php5-ldap php5-mysql php5-xsl php-apc php-soap php-xml-htmlsax3 php-xml-parser php-xml-rpc php-xml-rpc2 php-xml-rss php-xml-serializer php5-imagick php5-mcrypt php-xml* mysql-server vim curl apache2 rsync wget imagemagick ant libimage-exiftool-perl unzip lame autoconf build-essential checkinstall git libass-dev libfaac-dev libgpac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev librtmp-dev libtheora-dev libtool libvorbis-dev pkg-config texi2html zlib1g-dev ffmpeg2theora poppler-utils python-pip libreoffice libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-draw bibutils ufraw links monit tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra tesseract-ocr-spa tesseract-ocr-ita tesseract-ocr-por tesseract-ocr-hin tesseract-ocr-deu tesseract-ocr-jpn tesseract-ocr-rus
 ```
 
 ### Software Dependencies Compiled from Source <a id="from-source"></a> 
@@ -289,7 +290,7 @@ Cleanup ffmpeg source code:
 
 `cd ~ && wget http://v2v.cc/~j/ffmpeg2theora/ffmpeg2theora-0.29.linux64.bin && chmod a+x ffmpeg2theora-0.29.linux64.bin && install -m 755 ffmpeg2theora-0.29.linux64.bin /usr/bin/ffmpeg2theora && rm -rf ffmpeg2theora-0.29.linux64.bin`  
 
-#### java  <a id="java"></a>
+#### java and tomcat  <a id="java-tomcat"></a>
 Now that java is installed, we can set `JAVA_HOME` and also add it to `~/islandora-install.properties`
  
 `echo $( dirname $( dirname $( readlink -e /usr/bin/java ) ) )`
@@ -300,7 +301,7 @@ Update `~/islandora-install.properties` to match proper java version.
 
 For example: 
 
-`JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre`  
+`JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`  
 
 And source again if necessary:
  
@@ -311,6 +312,53 @@ Note that you need to ensure that your update-alternatives point to the right ja
 `update-alternatives --config java`  
 
 `update-alternatives --config javac`
+
+Adds Fedora User and adds fedora environment variables to /etc/profile.d/fedora.sh  
+```
+FEDORA_USER_TEST=`getent passwd $FEDORA_USER`
+```
+`if [ "$FEDORA_USER_TEST" = "" ]; then`  
+  `useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER`  
+Make environment variables match with what we set above:  
+  `echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/fedora/tomcat\nexport CATALINA_PID="$CATALINA_HOME/catalina.pid"\nexport JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"\nexport JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre\nexport FEDORA_USER=fedora' > /etc/profile.d/fedora.sh`
+  `sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh`
+   `sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh`
+   `sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh`
+   `sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh`
+   `sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh`  
+ `else`  
+ `echo -e "fedora user already exists\n"` 
+ `fi`
+ 
+**Note:** make sure you check `/etc/profile.d/fedora.sh` to ensure everything has been generated properly. If it didn’t you may have closed your shell you may need to resource `islandora-install.properties`. 
+
+For example: 
+
+`export FEDORA_HOME=/usr/local/fedora`
+`export CATALINA_HOME=/usr/share/tomcat`
+`export CATALINA_PID="$CATALINA_HOME/catalina.pid"`
+`export JAVA_OPTS="-Xms3993m -Xmx3993m -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"`
+`export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+
+Create tomcat init.d startup script:  
+
+`cd /etc/init.d`  
+
+`wget --no-check-certificate https://raw.github.com/discoverygarden/Fedora-Init-Script/master/tomcat`  
+
+`ln -s tomcat fedora`  
+
+`chmod a+x tomcat`  
+
+`$SCHEDULE_TOMCAT_SERVICE_COMMAND`  
+
+`cd ~`
+`wget http://archive.apache.org/dist/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz`
+`tar xf apache-tomcat-$TOMCAT_VERSION.tar.gz`
+`mv apache-tomcat-$TOMCAT_VERSION /usr/share`
+`ln -s /usr/share/apache-tomcat-$TOMCAT_VERSION /usr/share/tomcat`
+
+`chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION`
 
 #### Fits  <a id="fits"></a>
 
@@ -354,11 +402,11 @@ Specify drush commit due to issues with newer drush versions and automated tests
 
 #### OpenOffice <a id="openoffice"></a>
 
-
-
 `cd /etc/init.d && wget --no-check-certificate https://raw.github.com/discoverygarden/openoffice-init-script/master/openoffice && chmod a+x openoffice`  
 
 `useradd -m -d /home/openoffice openoffice`
+
+`service openoffice start`
 
 `$SCHEDULE_OPENOFFICE_SERVICE_COMMAND`
 
@@ -505,6 +553,8 @@ _Create install properties file_
 
 `sed -i "s|fedora.admin.pass=islandora|fedora.admin.pass=$FEDORA_ADMIN_PASS|g" ~/install.properties`
 
+`sed -i "s|servlet.engine=included|servlet.engine=existingTomcat|g"  ~/install.properties`
+
 `cd ~`  
 
 `wget http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-$FEDORA_VERSION.jar`  
@@ -515,68 +565,20 @@ _Create install properties file_
 
 `sed -i "s|changeme|islandora|g" $FEDORA_HOME/server/config/fedora.fcfg` 
 
+#copy over server.xml with the one provided with fedora
+`cp $CATALINA_HOME/conf/server.xml $CATALINA_HOME/conf/server.bak`
+`cp /usr/local/fedora/install/server.xml $CATALINA_HOME/conf/server.xml`
+#Note remove maxSpareThreads property in /usr/share/tomcat/conf/server.xml as it no longer does anything.
+
 Tweak some Fedora settings:
- 
-` sed -i 's|<param name="bufferSafeCapacity" value="40000">|<param name="bufferSafeCapacity" value="80000">|g' $FEDORA_HOME/server/config/fedora.fcfg`  
-
-`sed -i 's|<param name="bufferFlushBatchSize" value="20000">|<param name="bufferFlushBatchSize" value="40000">|g' $FEDORA_HOME/server/config/fedora.fcfg`  
-
-`sed -i 's|<param name="autoFlushBufferSize" value="20000">|<param name="autoFlushBufferSize" value="40000">|g' $FEDORA_HOME/server/config/fedora.fcfg`  
 
 `sed -i "s|security.fesl.authN.jaas.apia.enabled=false|security.fesl.authN.jaas.apia.enabled=true|g" $FEDORA_HOME/server/config/spring/web/web.properties` 
 
-Adds Fedora User and adds fedora environment variables to /etc/profile.d/fedora.sh  
-```
-FEDORA_USER_TEST=`getent passwd $FEDORA_USER`
-```
-`if [ "$FEDORA_USER_TEST" = "" ]; then`  
-  `useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER`  
-Make environment variables match with what we set above:  
-  `echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/fedora/tomcat\nexport CATALINA_PID="$CATALINA_HOME/catalina.pid"\nexport JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"\nexport JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre\nexport FEDORA_USER=fedora' > /etc/profile.d/fedora.sh`
-  `sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh`
-   `sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh`  
- `else`  
- `echo -e "fedora user already exists\n"` 
- `fi`
- 
-**Note:** make sure you check `/etc/profile.d/fedora.sh` to ensure everything has been generated properly. If it didn’t you may have closed your shell you may need to resource `islandora-install.properties`. 
-
-For example: 
-
-`export FEDORA_HOME=/usr/local/fedora`
-`export CATALINA_HOME=/usr/local/fedora/tomcat`
-`export CATALINA_PID="$CATALINA_HOME/catalina.pid"`
-`export JAVA_OPTS="-Xms3993m -Xmx3993m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"`
-`export JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre`
-
-`chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`
-
-Create tomcat init.d startup script:  
-
-`cd /etc/init.d`  
-
-`wget --no-check-certificate https://raw.github.com/discoverygarden/Fedora-Init-Script/master/tomcat`  
-
-`ln -s tomcat fedora`  
-
-`chmod a+x tomcat`  
-
-`$SCHEDULE_TOMCAT_SERVICE_COMMAND`  
-
 `unzip -o $CATALINA_HOME/webapps/fedora.war -d $CATALINA_HOME/webapps/fedora`
 
-Fix for fedora 3.7.1 (note tagged file for 3.7.1 doesn’t seem to work): 
- 
-`mkdir -p $CATALINA_HOME/webapps/fedora/WEB-INF/classes/org/fcrepo/server/storage/resources`  
-
-`cd $CATALINA_HOME/webapps/fedora/WEB-INF/classes/org/fcrepo/server/storage/resources`   
-
-`wget --no-check-certificate https://raw.githubusercontent.com/fcrepo3/fcrepo/6a4681c1229682d865f51ace194f20156ff48301/fcrepo-server/src/main/resources/dbspec/server/org/fcrepo/server/storage/resources/DefaultDOManager.dbspec`   
-
 `chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`
+
+`chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION`
 
 Start and stop tomcat so fedora creates some dirs:
 
@@ -666,20 +668,6 @@ ant generateIndexingXslt:
 
 `wget https://github.com/discoverygarden/dgi_gsearch_extensions/releases/download/v0.1.1/gsearch_extensions-0.1.1-jar-with-dependencies.jar -O gsearch_extensions-0.1.1-jar-with-dependencies.jar `
 
-##### GSearch Multithreading <a id="gsearch-multithreading"></a>
-
-**OPTIONAL:** Only needed if you want multithreading and you have multiple cores. This allows multithreaded gsearch updates for better performance. Recommend adding one Fgsupdater per core.
-
-`sed -i '0,/    <param name="type" value="topic">/s//    <param name="type" value="queue">/' $FEDORA_HOME/server/config/fedora.fcfg`  
-
-`sed -i 's|topic.fedoraAPIM|queue.fedoraAPIM|g' $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/updater/FgsUpdaters/updater.properties`  
-
-`cp -r $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/updater/FgsUpdaters $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/updater/FgsUpdater1`  
-
-`sed -i 's|fedoragsearch0|fedoragsearch1|g' $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/updater/FgsUpdater1/updater.properties`  
-
-`sed -i "s|FgsUpdaters|$GSEARCH_UPDATER_NAMES|g" $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/fedoragsearch.properties`
-
 #### Adore-Djatoka <a id="adore-djatoka"></a>
 
 Install djatoka war:  
@@ -701,7 +689,9 @@ Please note logging still needs some TLC log4j and logrotate clash with some fil
 
 `cp logging.properties /usr/local/fedora/tomcat/conf/logging.properties`  
 
-`cp log4j.properties /usr/local/fedora/tomcat/webapps/adore-djatoka/WEB-INF/classes/log4j.properties`  
+`cp log4j.properties /usr/local/fedora/tomcat/webapps/adore-djatoka/WEB-INF/classes/log4j.properties`
+
+`cp logback.xml /usr/local/fedora/server/config/logback.xml`
 
 `chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`  
 
@@ -987,3 +977,5 @@ More tesseract languages can be found here: [https://code.google.com/p/tesseract
 Recommend locking down Drupal permissons on Production e.g. run something like https://github.com/discoverygarden/secure_drupal_file
 
 Keep server firewalled in production! Don't expose any ports to the Internet asides from 80/443. Port 8080 should be kept locked down to localhost only. 
+
+Visit https://github.com/discoverygarden/basic-solr-config/wiki/performance-tuning-for-multithreaded-solr-ingest if interested in multi fgsupdaters. Be warned this can drastically increase HEAP pressure if not careful. 
