@@ -85,7 +85,7 @@ cat ~/islandora-install.properties
     TOMCAT_VERSION="7.0.55"
 # NOTE adjust memory so that it is no larger than half of total system memory. Depending on stack deployment this can be adjusted further. We don’t recommend running stack on system with less than 4GB of ram. Recommend adding -XX:+UseParallelOldGC for multi cpu systems
 
-    JAVA_OPTS="-Xms3072m -Xmx3072m -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat -Dsolr.solr.home=/usr/local/fedora/solr -Dkakadu.home=/opt/adore-djatoka/bin/Linux-x86-64 -Djava.library.path=/opt/adore-djatoka/lib/Linux-x86-64 -DLD_LIBRARY_PATH=/opt/adore-djatoka/lib/Linux-x86-64"
+    JAVA_OPTS="-Xms3072m -Xmx3072m -server -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat -Dsolr.solr.home=/usr/local/fedora/solr -Dkakadu.home=/opt/adore-djatoka/bin/Linux-x86-64 -Djava.library.path=/opt/adore-djatoka/lib/Linux-x86-64 -DLD_LIBRARY_PATH=/opt/adore-djatoka/lib/Linux-x86-64"
     JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre  
     # Moved this down below java install please change to match java version
     TOMCAT_BASE="http://localhost:8080"
