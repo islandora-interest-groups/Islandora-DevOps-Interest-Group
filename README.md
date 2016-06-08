@@ -3,7 +3,11 @@
 ## Convenors
 
 * [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
-* Co-convenor(s) welcomed!
+* Gavin Morris ([Common Media Inc.](http://commonmedia.com))
+
+## How to participate
+
+Send Mark a Skype contact request (mark.jordan50)
 
 ## Terms of Reference
 
