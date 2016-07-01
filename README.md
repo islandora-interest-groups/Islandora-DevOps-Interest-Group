@@ -33,7 +33,6 @@ Send Mark a Skype contact request (mark.jordan50)
 
 * [Andy Wagner](https://github.com/rarian) (University of Toronto)
 * [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
-* [Nick Ruest](https://github.com/ruebot) (York University)
 * [James Griffin](https://github.com/jrgriffiniii) (Lafayette College Libraries)
 * [Brad Spry](bradspry) (UNC Charlotte)
 * Diego Pino (REUNA)
