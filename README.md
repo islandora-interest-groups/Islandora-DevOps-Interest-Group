@@ -46,3 +46,4 @@ Send Mark a Skype contact request (mark.jordan50)
 * Phil Redmon
 * Randy Fischer
 * [Jacob Sanford](https://github.com/JacobSanford) (University of New Brunswick)
+* Luke Taylor (Discoverygarden)
