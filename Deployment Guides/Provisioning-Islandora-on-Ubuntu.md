@@ -154,127 +154,136 @@ apt-get -y install oracle-java8-installer libjpeg-dev libpng12-dev libtiff4-dev 
 #### ghostscript  <a id="ghostscript"></a>
 
 **Notes:** ubuntu 14.04 installs ghostscript 9.10 which is currently failing our test sets and prevents tiffs from being generated from pdfs. Recommend installing from source to get correct version.
+```
+wget http://downloads.ghostscript.com/public/old-gs-releases/ghostscript-9.05.tar.gz
 
-`wget http://downloads.ghostscript.com/public/ghostscript-9.05.tar.gz`
+tar xvzf ghostscript-9.05.tar.gz
 
-`tar xvzf ghostscript-9.05.tar.gz`
-
-`cd ghostscript-9.05`
+cd ghostscript-9.05
   
-`./configure`
+./configure
  
-`make && make install`
+make && make install
 
-`gs --version` should return result.
+`gs --version` #should return result.
+
+```
 
 ffmpeg  
-
-`mkdir ~/ffmpeg-source`
-`cd ~/ffmpeg-source`
-
+```
+mkdir ~/ffmpeg-source
+cd ~/ffmpeg-source
+```
 #### yasm <a id="yasm"></a>
+```
+wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz
 
-`wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz`
+tar xzvf yasm-1.2.0.tar.gz && rm -rf yasm-1.2.0.tar.gz
 
-`tar xzvf yasm-1.2.0.tar.gz && rm -rf yasm-1.2.0.tar.gz`
+cd yasm-1.2.0
 
-`cd yasm-1.2.0 `
+./configure
 
-`./configure `
+make
 
-`make`
-
-`checkinstall --pkgname=yasm --pkgversion="1.2.0" --backup=no --deldoc=yes --fstrans=no --default`
+checkinstall --pkgname=yasm --pkgversion="1.2.0" --backup=no --deldoc=yes --fstrans=no --default
+```
 
 #### x264 <a id="x264"></a>
+```
+cd ~/ffmpeg-source
 
-`cd ~/ffmpeg-source`
+git clone --depth 1 git://git.videolan.org/x264.git
 
-`git clone --depth 1 git://git.videolan.org/x264.git`
+cd x264
 
-`cd x264 `
+./configure --enable-static --enable-shared
 
-`./configure --enable-static --enable-shared`
+make
 
-`make`
+checkinstall --pkgname=x264 --pkgversion="3:$(./version.sh | awk -F'[" ]' '/POINT/{print $4"+git"$5}')" --backup=no --deldoc=yes  --fstrans=no --default
 
-`checkinstall --pkgname=x264 --pkgversion="3:$(./version.sh | awk -F'[" ]' '/POINT/{print $4"+git"$5}')" --backup=no --deldoc=yes  --fstrans=no --default`
+ldconfig
 
-`ldconfig`
-
-`cd ~/ffmpeg-source`
+cd ~/ffmpeg-source
+```
 
 #### aac  <a id="aac"></a>
+```
+git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
 
-`git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git`  
+cd fdk-aac
 
-`cd fdk-aac`
+autoreconf -fiv
 
-`autoreconf -fiv`
+./configure --disable-shared
 
-`./configure --disable-shared`
+make
 
-`make`
-
-`checkinstall --pkgname=fdk-aac --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default`
+checkinstall --pkgname=fdk-aac --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
+```
 
 #### libvpx <a id="libvpx"></a>
+```
+cd ~/ffmpeg-source
 
-`cd ~/ffmpeg-source`  
+git clone https://chromium.googlesource.com/webm/libvpx.git
 
-`git clone https://chromium.googlesource.com/webm/libvpx.git`  
+cd libvpx
 
-`cd libvpx`
+git checkout 8366a6e4ba95e6d5af040815d2afbb4bfe628d3f
 
-`git checkout 8366a6e4ba95e6d5af040815d2afbb4bfe628d3f`
+./configure --disable-examples --disable-unit-tests
 
-`./configure --disable-examples --disable-unit-tests`
+make
 
-`make`  
-
-`checkinstall --pkgname=libvpx --pkgversion="1:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default`
+checkinstall --pkgname=libvpx --pkgversion="1:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
+```
 
 #### opus  <a id="opus"></a>
+```
+cd ~/ffmpeg-source
 
-`cd ~/ffmpeg-source`  
+git clone --depth 1 git://git.xiph.org/opus.git
 
-`git clone --depth 1 git://git.xiph.org/opus.git`  
+cd opus
 
-`cd opus`  
+./autogen.sh
 
-`./autogen.sh`  
+./configure --disable-shared
 
-`./configure --disable-shared`  
+make
 
-`make`  
-
-`checkinstall --pkgname=libopus --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default  `
+checkinstall --pkgname=libopus --pkgversion="$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
+```
 
 #### ffmpeg <a id="ffmpeg"></a>
+```
+cd ~/ffmpeg-source
 
-`cd ~/ffmpeg-source`  
+wget http://www.ffmpeg.org/releases/ffmpeg-1.1.1.tar.gz
 
-`wget http://www.ffmpeg.org/releases/ffmpeg-1.1.1.tar.gz`  
+tar xf ffmpeg-1.1.1.tar.gz && rm -rf ffmpeg-1.1.1.tar.gz  
 
-`tar xf ffmpeg-1.1.1.tar.gz && rm -rf ffmpeg-1.1.1.tar.gz`  
-
-`cd ffmpeg-1.1.1`
+cd ffmpeg-1.1.1
+```
 
 Had to do this to remove strange characters that cause build errors.
- 
-`sed -i 's/×/x/' doc/filters.texi`  
+```
+sed -i 's/×/x/' doc/filters.texi
 
-`sed -i 's/×/x/' doc/ffmpeg.texi`  
+sed -i 's/×/x/' doc/ffmpeg.texi
 
-`./configure --enable-gpl --enable-libass --enable-libfaac --enable-libfdk-aac --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-librtmp --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-nonfree --enable-version3 --enable-libopus`  
+./configure --enable-gpl --enable-libass --enable-libfaac --enable-libfdk-aac --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-librtmp --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-nonfree --enable-version3 --enable-libopus
 
-`make`
+make
 
-`checkinstall --pkgname=ffmpeg --pkgversion="7:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default`  
+checkinstall --pkgname=ffmpeg --pkgversion="7:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
 
-`make install`  
+make install
 
-`hash -r`
+hash -r
+```
 
 The following should tell apt to not upgrade ffmpeg (we need version 1.1.1):  
 
@@ -316,119 +325,127 @@ Note that you need to ensure that your update-alternatives point to the right ja
 Adds Fedora User and adds fedora environment variables to /etc/profile.d/fedora.sh  
 ```
 FEDORA_USER_TEST=`getent passwd $FEDORA_USER`
+
+useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER
 ```
-`if [ "$FEDORA_USER_TEST" = "" ]; then`  
-  `useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER`  
+
 Make environment variables match with what we set above:  
-  `echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/fedora/tomcat\nexport CATALINA_PID="$CATALINA_HOME/catalina.pid"\nexport JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"\nexport JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre\nexport FEDORA_USER=fedora' > /etc/profile.d/fedora.sh`
-  `sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh`
-   `sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh`
-   `sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh`  
- `else`  
- `echo -e "fedora user already exists\n"` 
- `fi`
+```
+echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/fedora/tomcat\nexport CATALINA_PID="$CATALINA_HOME/catalina.pid"\nexport JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"\nexport JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre\nexport FEDORA_USER=fedora' > /etc/profile.d/fedora.sh
+
+sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh
+sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh
+sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh
+sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh
+sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh
+```
  
 **Note:** make sure you check `/etc/profile.d/fedora.sh` to ensure everything has been generated properly. If it didn’t you may have closed your shell you may need to resource `islandora-install.properties`. 
 
 For example: 
-
-`export FEDORA_HOME=/usr/local/fedora`
-`export CATALINA_HOME=/usr/share/tomcat`
-`export CATALINA_PID="$CATALINA_HOME/catalina.pid"`
-`export JAVA_OPTS="-Xms3993m -Xmx3993m -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"`
-`export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+```
+export FEDORA_HOME=/usr/local/fedora
+export CATALINA_HOME=/usr/share/tomcat
+export CATALINA_PID="$CATALINA_HOME/catalina.pid"
+export JAVA_OPTS="-Xms3993m -Xmx3993m -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre
+```
 
 Create tomcat init.d startup script:  
+```
+cd /etc/init.d
 
-`cd /etc/init.d`  
+wget --no-check-certificate https://raw.github.com/discoverygarden/Fedora-Init-Script/master/tomcat
 
-`wget --no-check-certificate https://raw.github.com/discoverygarden/Fedora-Init-Script/master/tomcat`  
+ln -s tomcat fedora
 
-`ln -s tomcat fedora`  
+chmod a+x tomcat 
 
-`chmod a+x tomcat`  
+$SCHEDULE_TOMCAT_SERVICE_COMMAND
 
-`$SCHEDULE_TOMCAT_SERVICE_COMMAND`  
+cd ~
+wget http://archive.apache.org/dist/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+tar xf apache-tomcat-$TOMCAT_VERSION.tar.gz
+mv apache-tomcat-$TOMCAT_VERSION /usr/share
+ln -s /usr/share/apache-tomcat-$TOMCAT_VERSION /usr/share/tomcat
 
-`cd ~`
-`wget http://archive.apache.org/dist/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz`
-`tar xf apache-tomcat-$TOMCAT_VERSION.tar.gz`
-`mv apache-tomcat-$TOMCAT_VERSION /usr/share`
-`ln -s /usr/share/apache-tomcat-$TOMCAT_VERSION /usr/share/tomcat`
-
-`chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION`
+chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION
+```
 
 #### Fits  <a id="fits"></a>
+```
+cd /opt
 
-`cd /opt`  
+wget http://fits.googlecode.com/files/fits-0.6.2.zip
 
-`wget http://fits.googlecode.com/files/fits-0.6.2.zip`  
-
-`unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh`
+unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh
+```
 
 #### adore-djatoka <a id="adore-djatoka-install"></a>
- 
-`cd /opt`  
+``` 
+cd /opt
 
-`wget http://sourceforge.net/projects/djatoka/files/djatoka/1.1/adore-djatoka-1.1.tar.gz/download -O adore-djatoka-1.1.tar.gz`  
+wget http://sourceforge.net/projects/djatoka/files/djatoka/1.1/adore-djatoka-1.1.tar.gz/download -O adore-djatoka-1.1.tar.gz
 
-`tar xf adore-djatoka-1.1.tar.gz && rm -rf adore-djatoka-1.1.tar.gz`  
+tar xf adore-djatoka-1.1.tar.gz && rm -rf adore-djatoka-1.1.tar.gz
 
-`ln -s adore-djatoka-1.1 adore-djatoka`
+ln -s adore-djatoka-1.1 adore-djatoka
+```
 
 Make kakadu available on the command line:  
+```
+ln -s /opt/adore-djatoka/bin/Linux-x86-64/kdu_expand /usr/bin/kdu_expand
 
-`ln -s /opt/adore-djatoka/bin/Linux-x86-64/kdu_expand /usr/bin/kdu_expand`  
+ln -s /opt/adore-djatoka/bin/Linux-x86-64/kdu_compress /usr/bin/kdu_compress
 
-`ln -s /opt/adore-djatoka/bin/Linux-x86-64/kdu_compress /usr/bin/kdu_compress`  
+echo "/opt/adore-djatoka/lib/Linux-x86-64" > /etc/ld.so.conf.d/kakadu.conf
 
-`echo "/opt/adore-djatoka/lib/Linux-x86-64" > /etc/ld.so.conf.d/kakadu.conf`  
-
-`ldconfig`
+ldconfig
+```
 
 #### Drush  <a id="drush"></a>
 
 Specify drush commit due to issues with newer drush versions and automated tests used by QA:
+```
+cd /opt
 
-`cd /opt`  
+git clone https://github.com/drush-ops/drush.git && cd drush && git checkout b9e6c8c00da0fbf1227869cdf915b0c6cea466cc
 
-`git clone https://github.com/drush-ops/drush.git && cd drush && git checkout b9e6c8c00da0fbf1227869cdf915b0c6cea466cc`  
-
-`ln -s /opt/drush/drush /usr/bin/drush`
+ln -s /opt/drush/drush /usr/bin/drush
+```
 
 ### Configuration <a id="configuration"></a>  
 
 #### OpenOffice <a id="openoffice"></a>
+```
+cd /etc/init.d && wget --no-check-certificate https://raw.github.com/discoverygarden/openoffice-init-script/master/openoffice && chmod a+x openoffice
 
-`cd /etc/init.d && wget --no-check-certificate https://raw.github.com/discoverygarden/openoffice-init-script/master/openoffice && chmod a+x openoffice`  
+useradd -m -d /home/openoffice openoffice
 
-`useradd -m -d /home/openoffice openoffice`
+service openoffice start
 
-`service openoffice start`
-
-`$SCHEDULE_OPENOFFICE_SERVICE_COMMAND`
+$SCHEDULE_OPENOFFICE_SERVICE_COMMAND
+```
 
 #### Monit <a id="monit"></a>
-
 Keep openoffice running as a service with Monit as it has been known to crash.  
+```
+echo -e "check process openoffice\n        matching \"/usr/lib/libreoffice/program/soffice.bin\"\n        start program = \"/etc/init.d/openoffice start\"\n        stop program = \"/etc/init.d/openoffice stop\"\n        if failed host 127.0.0.1 port 8100 then restart\n        if 5 restarts within 5 cycles then timeout" > $MONIT_CONF_DIR/openoffice.conf
 
-`echo -e "check process openoffice\n        matching \"/usr/lib/libreoffice/program/soffice.bin\"\n        start program = \"/etc/init.d/openoffice start\"\n        stop program = \"/etc/init.d/openoffice stop\"\n        if failed host 127.0.0.1 port 8100 then restart\n        if 5 restarts within 5 cycles then timeout" > $MONIT_CONF_DIR/openoffice.conf`  
+sed -i 's|# set httpd| set httpd|g' $MONIT_CONFIG_FILE
 
-`sed -i 's|# set httpd| set httpd|g' $MONIT_CONFIG_FILE`  
+sed -i 's|#    use address|    use address|g' $MONIT_CONFIG_FILE
 
-`sed -i 's|#    use address|    use address|g' $MONIT_CONFIG_FILE`  
+sed -i 's|#    allow localhost|    allow localhost|g' $MONIT_CONFIG_FILE
 
-`sed -i 's|#    allow localhost|    allow localhost|g' $MONIT_CONFIG_FILE`  
+sed -i 's|    allow admin:monit|#    allow admin:monit|g' $MONIT_CONFIG_FILE  
 
-`sed -i 's|    allow admin:monit|#    allow admin:monit|g' $MONIT_CONFIG_FILE`  
+sed -i 's|    allow @monit |#    allow @monit |g' $MONIT_CONFIG_FILE
 
-`sed -i 's|    allow @monit |#    allow @monit |g' $MONIT_CONFIG_FILE`  
+sed -i 's|    allow @users readonly |#    allow @users readonly |g' $MONIT_CONFIG_FILE  
 
-`sed -i 's|    allow @users readonly |#    allow @users readonly |g' $MONIT_CONFIG_FILE`  
-
-`service monit restart`
+service monit restart
+```
 
 #### Apache and PHP  <a id="apache-php"></a>
 
@@ -482,23 +499,25 @@ Setup apache vhost:
     
 </VirtualHost>
 ```
-`a2enmod rewrite`  
+```
+a2enmod rewrite  
 
-`a2enmod proxy`  
+a2enmod proxy
 
-`a2enmod proxy_http`  
+a2enmod proxy_http  
 
-`pecl install uploadprogress`  
+pecl install uploadprogress 
 
-`sed -i '949iextension=uploadprogress.so' /etc/php5/apache2/php.ini`  
+sed -i '949iextension=uploadprogress.so' /etc/php5/apache2/php.ini 
 
-`sed -i "s|memory_limit = 128M|memory_limit = 512M|g" /etc/php5/apache2/php.ini`  
+sed -i "s|memory_limit = 128M|memory_limit = 512M|g" /etc/php5/apache2/php.ini
 
-`sed -i "s|post_max_size = 8M|post_max_size = 2048M|g" /etc/php5/apache2/php.ini`  
+sed -i "s|post_max_size = 8M|post_max_size = 2048M|g" /etc/php5/apache2/php.ini
 
-`sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 2048M|g" /etc/php5/apache2/php.ini`  
+sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 2048M|g" /etc/php5/apache2/php.ini
 
-`echo "apc.shm_size = 64M" >> $APC_CONFIG_FILE`
+echo "apc.shm_size = 64M" >> $APC_CONFIG_FILE
+```
 
 #### Setup MySQL Databases and Server <a id="setup-mysql"></a>
 
@@ -536,34 +555,36 @@ Dumps will be stored in `/dbbackups`
 #### Fedora Commons Base Install  <a id="fedora-base"></a>
 
 _Create install properties file_  
+```
 
-`cd ~`  
+cd ~ 
 
-`echo -e 'keystore.file=included\nri.enabled=true\nmessaging.enabled=true\napia.auth.required=false\ndatabase.jdbcDriverClass=com.mysql.jdbc.Driver\ntomcat.ssl.port=8443\nssl.available=true\ndatabase.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true\nmessaging.uri=vm\:(broker\:(tcp\://localhost\:61616))\ndatabase.password=islandora\ndatabase.mysql.driver=included\ndatabase.username=fedoraAdmin\nfesl.authz.enabled=false\ntomcat.shutdown.port=8055\ndeploy.local.services=true\nxacml.enabled=true\ndatabase.mysql.jdbcDriverClass=com.mysql.jdbc.Driver\ntomcat.http.port=8080\nfedora.serverHost=localhost\ndatabase=mysql\ndatabase.driver=included\nfedora.serverContext=fedora\nllstore.type=akubra-fs\ntomcat.home=/usr/local/fedora/tomcat\nfesl.authn.enabled=true\ndatabase.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true\nfedora.home=/usr/local/fedora\ninstall.type=custom\nservlet.engine=included\napim.ssl.required=false\nfedora.admin.pass=islandora\napia.ssl.required=false' > ~/install.properties`
+echo -e 'keystore.file=included\nri.enabled=true\nmessaging.enabled=true\napia.auth.required=false\ndatabase.jdbcDriverClass=com.mysql.jdbc.Driver\ntomcat.ssl.port=8443\nssl.available=true\ndatabase.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true\nmessaging.uri=vm\:(broker\:(tcp\://localhost\:61616))\ndatabase.password=islandora\ndatabase.mysql.driver=included\ndatabase.username=fedoraAdmin\nfesl.authz.enabled=false\ntomcat.shutdown.port=8055\ndeploy.local.services=true\nxacml.enabled=true\ndatabase.mysql.jdbcDriverClass=com.mysql.jdbc.Driver\ntomcat.http.port=8080\nfedora.serverHost=localhost\ndatabase=mysql\ndatabase.driver=included\nfedora.serverContext=fedora\nllstore.type=akubra-fs\ntomcat.home=/usr/local/fedora/tomcat\nfesl.authn.enabled=true\ndatabase.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true\nfedora.home=/usr/local/fedora\ninstall.type=custom\nservlet.engine=included\napim.ssl.required=false\nfedora.admin.pass=islandora\napia.ssl.required=false' > ~/install.properties
 
-`sed -i "s|localhost/fedora3?|localhost/$FEDORA_DB_NAME?|g" ~/install.properties`  
+sed -i "s|localhost/fedora3?|localhost/$FEDORA_DB_NAME?|g" ~/install.properties
 
-`sed -i "s|database.password=islandora|database.password=$FEDORA_DB_PASS|g" ~/install.properties`  
+sed -i "s|database.password=islandora|database.password=$FEDORA_DB_PASS|g" ~/install.properties 
 
-`sed -i "s|database.username=fedoraAdmin|database.username=$FEDORA_DB_USER|g" ~/install.properties`  
+sed -i "s|database.username=fedoraAdmin|database.username=$FEDORA_DB_USER|g" ~/install.properties  
 
-`sed -i "s|fedora.home=/usr/local/fedora|fedora.home=$FEDORA_HOME|g" ~/install.properties`  
+sed -i "s|fedora.home=/usr/local/fedora|fedora.home=$FEDORA_HOME|g" ~/install.properties 
 
-`sed -i "s|tomcat.home=/usr/local/fedora/tomcat|tomcat.home=$CATALINA_HOME|g" ~/install.properties`
+sed -i "s|tomcat.home=/usr/local/fedora/tomcat|tomcat.home=$CATALINA_HOME|g" ~/install.properties
 
-`sed -i "s|fedora.admin.pass=islandora|fedora.admin.pass=$FEDORA_ADMIN_PASS|g" ~/install.properties`
+sed -i "s|fedora.admin.pass=islandora|fedora.admin.pass=$FEDORA_ADMIN_PASS|g" ~/install.properties
 
-`sed -i "s|servlet.engine=included|servlet.engine=existingTomcat|g"  ~/install.properties`
+sed -i "s|servlet.engine=included|servlet.engine=existingTomcat|g"  ~/install.properties
 
-`cd ~`  
+cd ~  
 
-`wget http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-$FEDORA_VERSION.jar`  
+wget http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-$FEDORA_VERSION.jar  
 
-`java -jar fcrepo-installer-$FEDORA_VERSION.jar install.properties`  
+java -jar fcrepo-installer-$FEDORA_VERSION.jar install.properties  
 
-`rm -rf fcrepo-installer-$FEDORA_VERSION.jar install.properties`  
+rm -rf fcrepo-installer-$FEDORA_VERSION.jar install.properties  
 
-`sed -i "s|changeme|islandora|g" $FEDORA_HOME/server/config/fedora.fcfg` 
+sed -i "s|changeme|islandora|g" $FEDORA_HOME/server/config/fedora.fcfg
+```
 
 #copy over server.xml with the one provided with fedora
 `cp $CATALINA_HOME/conf/server.xml $CATALINA_HOME/conf/server.bak`
@@ -571,14 +592,15 @@ _Create install properties file_
 #Note remove maxSpareThreads property in /usr/share/tomcat/conf/server.xml as it no longer does anything.
 
 Tweak some Fedora settings:
+```
+sed -i "s|security.fesl.authN.jaas.apia.enabled=false|security.fesl.authN.jaas.apia.enabled=true|g" $FEDORA_HOME/server/config/spring/web/web.properties 
 
-`sed -i "s|security.fesl.authN.jaas.apia.enabled=false|security.fesl.authN.jaas.apia.enabled=true|g" $FEDORA_HOME/server/config/spring/web/web.properties` 
+unzip -o $CATALINA_HOME/webapps/fedora.war -d $CATALINA_HOME/webapps/fedora
 
-`unzip -o $CATALINA_HOME/webapps/fedora.war -d $CATALINA_HOME/webapps/fedora`
+chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME
 
-`chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`
-
-`chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION`
+chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION
+```
 
 Start and stop tomcat so fedora creates some dirs:
 
@@ -587,86 +609,91 @@ Start and stop tomcat so fedora creates some dirs:
 #### XACML Settings <a id="xacml-settings"></a>
 
 Adjust xacml policies: 
- 
-`rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-purge-*`  
+```
+rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-purge-* 
 
-`rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-inactive-or-deleted-objects-or-datastreams-if-not-administrator.xml`  
+rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-inactive-or-deleted-objects-or-datastreams-if-not-administrator.xml  
 
-`rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-policy-management-if-not-administrator.xml  `
+rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-policy-management-if-not-administrator.xml
+```
 
 **Note:** This file should either be removed or tweaked if you wish to access fedoraAdmin. Keep in mind firewall rules would need to be updated as well.
+```
+rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-apim-if-not-localhost.xml  
 
-`rm -rf $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/default/deny-apim-if-not-localhost.xml`  
+cd ~  
 
-`cd ~`  
+git clone https://github.com/Islandora/islandora-xacml-policies && cd islandora-xacml-policies 
 
-`git clone https://github.com/Islandora/islandora-xacml-policies && cd islandora-xacml-policies`  
-
-`mkdir $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && cp *.xml $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && rm -rf ~/islandora-xacml-policies`
+mkdir $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && cp *.xml $FEDORA_HOME/data/fedora-xacml-policies/repository-policies/islandora_policies && rm -rf ~/islandora-xacml-policies
+```
 
 #### GSearch and Solr <a id="gsearch-solr"></a>
 
 Grab fedoragsearch and solr - do basic config:  
+```
+cd ~  
 
-`cd ~`  
+wget $FEDORA_GSEARCH_URL
 
-`wget $FEDORA_GSEARCH_URL`  
+unzip -o $FEDORA_GSEARCH_NAME.zip 
 
-`unzip -o $FEDORA_GSEARCH_NAME.zip`  
+cp $FEDORA_GSEARCH_NAME/fedoragsearch.war $CATALINA_HOME/webapps/ && unzip -o $FEDORA_GSEARCH_NAME/fedoragsearch.war -d $CATALINA_HOME/webapps/fedoragsearch && rm -rf $FEDORA_GSEARCH_NAME*
 
-`cp $FEDORA_GSEARCH_NAME/fedoragsearch.war $CATALINA_HOME/webapps/ && unzip -o $FEDORA_GSEARCH_NAME/fedoragsearch.war -d $CATALINA_HOME/webapps/fedoragsearch && rm -rf $FEDORA_GSEARCH_NAME*`  
+wget $SOLR_URL
 
-`wget $SOLR_URL`  
+tar -xf $SOLR_NAME.tgz
 
-`tar -xf $SOLR_NAME.tgz`  
+cp -r $SOLR_NAME/example/solr $FEDORA_HOME/solr
 
-`cp -r $SOLR_NAME/example/solr $FEDORA_HOME/solr`
+cp $SOLR_NAME/example/webapps/solr.war $CATALINA_HOME/webapps/ && unzip -o $SOLR_NAME/example/webapps/solr.war -d $CATALINA_HOME/webapps/solr 
 
-`cp $SOLR_NAME/example/webapps/solr.war $CATALINA_HOME/webapps/ && unzip -o $SOLR_NAME/example/webapps/solr.war -d $CATALINA_HOME/webapps/solr`  
+mkdir $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/data
 
-`mkdir $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/data`  
+chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME
 
-`chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`  
-
-`cd $CATALINA_HOME/webapps/fedoragsearch/FgsConfig`
+cd $CATALINA_HOME/webapps/fedoragsearch/FgsConfig
+```
 
 ant generateIndexingXslt: 
+```
+ant -f fgsconfig-basic.xml -Dlocal.FEDORA_HOME=$FEDORA_HOME -DgsearchUser=$FEDORA_ADMIN_USER -DgsearchPass=$FEDORA_ADMIN_PASS -DfinalConfigPath=$CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes -DlogFilePath=$FEDORA_HOME/server/logs -DfedoraUser=$FEDORA_ADMIN_USER -DfedoraPass=$FEDORA_ADMIN_PASS -DobjectStoreBase=$FEDORA_HOME/data/objectStore -DindexDir=$FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/data/index -DindexingDocXslt=foxmlToSolr -propertyfile fgsconfig-basic-for-islandora.properties
+mv $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/schema.xml $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/schema.xml.bak  
 
-`ant -f fgsconfig-basic.xml -Dlocal.FEDORA_HOME=$FEDORA_HOME -DgsearchUser=$FEDORA_ADMIN_USER -DgsearchPass=$FEDORA_ADMIN_PASS -DfinalConfigPath=$CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes -DlogFilePath=$FEDORA_HOME/server/logs -DfedoraUser=$FEDORA_ADMIN_USER -DfedoraPass=$FEDORA_ADMIN_PASS -DobjectStoreBase=$FEDORA_HOME/data/objectStore -DindexDir=$FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/data/index -DindexingDocXslt=foxmlToSolr -propertyfile fgsconfig-basic-for-islandora.properties`
-`mv $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/schema.xml $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/schema.xml.bak`  
+mv $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/solrconfig.xml $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/solrconfig.xml.bak  
 
-`mv $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/solrconfig.xml $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf/solrconfig.xml.bak`  
-
-`mv $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt` `$CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt.bak` 
+mv $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt.bak 
+```
 
 
 ##### Solr Configuration <a id="solr-configuration"></a>
- 
-`cd ~`  
+```
+cd ~
 
-`git clone git://github.com/discoverygarden/basic-solr-config.git`  
+git clone git://github.com/discoverygarden/basic-solr-config.git 
 
-`cd basic-solr-config`  
+cd basic-solr-config 
 
-`git checkout 4.x`  
+git checkout 4.x
 
-`mv ~/basic-solr-config/conf/* $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf`  
+mv ~/basic-solr-config/conf/* $FEDORA_HOME/solr/$SOLR_DEFAULT_CORE_PATH/conf  
 
-`mv ~/basic-solr-config/islandora_transforms $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex`  
+mv ~/basic-solr-config/islandora_transforms $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex
 
-`mv ~/basic-solr-config/foxmlToSolr.xslt $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt`  
+mv ~/basic-solr-config/foxmlToSolr.xslt $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/foxmlToSolr.xslt  
 
-`cp ~/basic-solr-config/index.properties $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/index.properties`  
+cp ~/basic-solr-config/index.properties $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/index.properties
 
-`cd ~`  
+cd ~ 
 
-`rm -rf ~/basic-solr-config`  
+rm -rf ~/basic-solr-config  
 
-`rm -rf ~/$SOLR_NAME*`  
+rm -rf ~/$SOLR_NAME* 
 
-`cd $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/lib`  
+cd $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/lib  
 
-`wget https://github.com/discoverygarden/dgi_gsearch_extensions/releases/download/v0.1.1/gsearch_extensions-0.1.1-jar-with-dependencies.jar -O gsearch_extensions-0.1.1-jar-with-dependencies.jar `
+wget https://github.com/discoverygarden/dgi_gsearch_extensions/releases/download/v0.1.1/gsearch_extensions-0.1.1-jar-with-dependencies.jar -O gsearch_extensions-0.1.1-jar-with-dependencies.jar
+```
 
 #### Adore-Djatoka <a id="adore-djatoka"></a>
 
@@ -676,47 +703,48 @@ Install djatoka war:
 
 #### Setup Logging <a id="setup-logging"></a>
 Please note logging still needs some TLC log4j and logrotate clash with some files: 
- 
-`cd ~`  
+``` 
+cd ~ 
 
-`git clone https://github.com/discoverygarden/islandora_log_config.git`  
+git clone https://github.com/discoverygarden/islandora_log_config.git
 
-`cd islandora_log_config`  
+cd islandora_log_config
 
-`cp islandora_logrotate /etc/logrotate.d/`  
+cp islandora_logrotate /etc/logrotate.d/  
 
-`cp log4j.xml /usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/log4j.xml`  
+cp log4j.xml /usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/log4j.xml 
 
-`cp logging.properties /usr/local/fedora/tomcat/conf/logging.properties`  
+cp logging.properties /usr/local/fedora/tomcat/conf/logging.properties
 
-`cp log4j.properties /usr/local/fedora/tomcat/webapps/adore-djatoka/WEB-INF/classes/log4j.properties`
+cp log4j.properties /usr/local/fedora/tomcat/webapps/adore-djatoka/WEB-INF/classes/log4j.properties
 
-`cp logback.xml /usr/local/fedora/server/config/logback.xml`
+cp logback.xml /usr/local/fedora/server/config/logback.xml
 
-`chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME`  
-
+chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME 
+```
 
 #### Drupal Filter <a id=drupal-filter"></a>
 
 Setup Drupal filter:  
+```
+cd $CATALINA_HOME/webapps/fedora/WEB-INF/lib 
 
-`cd $CATALINA_HOME/webapps/fedora/WEB-INF/lib`  
+wget --no-check-certificate $DRUPAL_FILTER_URL 
 
-`wget --no-check-certificate $DRUPAL_FILTER_URL`  
+echo -e 'fedora-auth\n{\n\torg.fcrepo.server.security.jaas.auth.module.XmlUsersFileModule required\n\tdebug=true; \n\tca.upei.roblib.fedora.servletfilter.DrupalAuthModule required\n\tdebug=true; \n};\n\nfedora-auth-xmlusersfile\n{\n\torg.fcrepo.server.security.jaas.auth.module.XmlUsersFileModule required\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind"\n\tbind.filter="uid={0},ou=people,dc=muradora,dc=org"\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind-search-bind\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind-search-bind"\n\tbind.user="uid=binduser,ou=people,dc=muradora,dc=org"\n\tbind.pass="murabind"\n\tsearch.base="ou=people,dc=muradora,dc=org"\n\tsearch.filter="(uid={0})"\n\tattrs.fetch="cn,sn,mail,displayName,carLicense"\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind-search-compare\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind-search-compare"\n\tbind.user="uid=binduser,ou=people,dc=muradora,dc=org"\n\tbind.pass="murabind"\n\tsearch.base="ou=people,dc=muradora,dc=org"\n\tsearch.filter="(uid={0})"\n\tattrs.fetch="cn,sn,mail,displayName,carLicense"\n\tdebug=true;\n};' > $FEDORA_HOME/server/config/jaas.conf 
 
-`echo -e 'fedora-auth\n{\n\torg.fcrepo.server.security.jaas.auth.module.XmlUsersFileModule required\n\tdebug=true; \n\tca.upei.roblib.fedora.servletfilter.DrupalAuthModule required\n\tdebug=true; \n};\n\nfedora-auth-xmlusersfile\n{\n\torg.fcrepo.server.security.jaas.auth.module.XmlUsersFileModule required\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind"\n\tbind.filter="uid={0},ou=people,dc=muradora,dc=org"\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind-search-bind\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind-search-bind"\n\tbind.user="uid=binduser,ou=people,dc=muradora,dc=org"\n\tbind.pass="murabind"\n\tsearch.base="ou=people,dc=muradora,dc=org"\n\tsearch.filter="(uid={0})"\n\tattrs.fetch="cn,sn,mail,displayName,carLicense"\n\tdebug=true;\n};\n\nfedora-auth-ldap-bind-search-compare\n{\n\torg.fcrepo.server.security.jaas.auth.module.LdapModule required\n\thost.url="ldap://dev01.muradora.org"\n\tauth.type="simple"\n\tbind.mode="bind-search-compare"\n\tbind.user="uid=binduser,ou=people,dc=muradora,dc=org"\n\tbind.pass="murabind"\n\tsearch.base="ou=people,dc=muradora,dc=org"\n\tsearch.filter="(uid={0})"\n\tattrs.fetch="cn,sn,mail,displayName,carLicense"\n\tdebug=true;\n};' > $FEDORA_HOME/server/config/jaas.conf ` 
+cd $FEDORA_HOME/server/config  
 
-`cd $FEDORA_HOME/server/config`  
+wget https://raw.github.com/Islandora/islandora_drupal_filter/master/filter-drupal.xml 
 
-`wget https://raw.github.com/Islandora/islandora_drupal_filter/master/filter-drupal.xml`  
+sed -i "s|DB_SERVER|$DB_SERVER|g" $FEDORA_HOME/server/config/filter-drupal.xml
 
-`sed -i "s|DB_SERVER|$DB_SERVER|g" $FEDORA_HOME/server/config/filter-drupal.xml`  
+sed -i "s|DRUPAL_DB_NAME|$DRUPAL_DB_NAME|g" $FEDORA_HOME/server/config/filter-drupal.xml
 
-`sed -i "s|DRUPAL_DB_NAME|$DRUPAL_DB_NAME|g" $FEDORA_HOME/server/config/filter-drupal.xml`  
+sed -i "s|DRUPAL_DB_USER|$DRUPAL_DB_USER|g" $FEDORA_HOME/server/config/filter-drupal.xml 
 
-`sed -i "s|DRUPAL_DB_USER|$DRUPAL_DB_USER|g" $FEDORA_HOME/server/config/filter-drupal.xml`  
-
-`sed -i "s|DRUPAL_DB_PASS|$DRUPAL_DB_PASS|g" $FEDORA_HOME/server/config/filter-drupal.xml`
+sed -i "s|DRUPAL_DB_PASS|$DRUPAL_DB_PASS|g" $FEDORA_HOME/server/config/filter-drupal.xml
+```
 
 Start fedora fully configured: 
 
@@ -730,22 +758,22 @@ Start fedora fully configured:
 
 **Note:** Some libraries, modules, contrib are optional but are included to support additional theming. e.g. features, strongarm, node_export.
  
-`cd $OS_DEFAULT_DOCUMENTROOT ` 
+```
+cd $OS_DEFAULT_DOCUMENTROOT
+drush dl drupal  
 
-`drush dl drupal`  
+mv drupal-7* drupal7
 
-`mv drupal-7* drupal7`  
+cd drupal7
 
-`cd drupal7`  
+mkdir sites/default/files  
 
-`mkdir sites/default/files`  
+mkdir sites/all/{modules,themes,libraries}
 
-`mkdir sites/all/{modules,themes,libraries}`  
+cp sites/default/default.settings.php sites/default/settings.php
 
-`cp sites/default/default.settings.php sites/default/settings.php`
-
-`cd sites/all/modules`  
-
+cd sites/all/modules  
+```
 
 #### Islandora Modules  <a id="islandora-modules"></a>
 
@@ -753,222 +781,223 @@ Git clone the following modules:
 
 _modslist.sh helper script to handle the git repos to install modules_:  
 
-`#!/bin/bash`  
-`cd /var/www/drupal7/sites/all/modules`
+```
+#!/bin/bash
+cd /var/www/drupal7/sites/all/modules
 
-`git clone https://github.com/Islandora/islandora.git` 
- 
-`git clone https://github.com/Islandora/islandora_scholar.git` 
- 
-`git clone https://github.com/discoverygarden/google_analytics_reports.git` 
- 
-`git clone https://github.com/discoverygarden/islandora_ga_reports.git` 
- 
-`git clone https://github.com/Islandora/islandora_solr_search.git ` 
+git clone https://github.com/Islandora/islandora.git
 
-`git clone https://github.com/Islandora/islandora_solr_views.git`  
+git clone https://github.com/Islandora/islandora_scholar.git
 
-`git clone https://github.com/Islandora/islandora_solution_pack_collection.git ` 
+git clone https://github.com/discoverygarden/google_analytics_reports.git
 
-`git clone https://github.com/Islandora/objective_forms.git  `
+git clone https://github.com/discoverygarden/islandora_ga_reports.git
 
-`git clone https://github.com/Islandora/islandora_xml_forms.git`  
+git clone https://github.com/Islandora/islandora_solr_search.git
 
-`git clone https://github.com/Islandora/php_lib.git  `
+git clone https://github.com/Islandora/islandora_solr_views.git
 
-`git clone https://github.com/Islandora/islandora_importer.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_collection.git
 
-`git clone https://github.com/Islandora/islandora_bookmark.git` 
- 
-`git clone https://github.com/Islandora/islandora_oai.git  `
+git clone https://github.com/Islandora/objective_forms.git
 
-`git clone https://github.com/Islandora/islandora_solution_pack_audio.git` 
- 
-`git clone https://github.com/Islandora/islandora_solution_pack_book.git`
-  
-`git clone https://github.com/Islandora/islandora_solution_pack_image.git `
- 
-`git clone https://github.com/Islandora/islandora_solution_pack_large_image.git `
- 
-`git clone https://github.com/Islandora/islandora_solution_pack_pdf.git ` 
+git clone https://github.com/Islandora/islandora_xml_forms.git
 
-`git clone https://github.com/Islandora/islandora_solution_pack_video.git`  
+git clone https://github.com/Islandora/php_lib.git
 
-`git clone https://github.com/Islandora/islandora_paged_content.git ` 
+git clone https://github.com/Islandora/islandora_importer.git
 
-`git clone https://github.com/Islandora/islandora_internet_archive_bookreader.git` 
- 
-`git clone https://github.com/Islandora/islandora_ocr.git`  
+git clone https://github.com/Islandora/islandora_bookmark.git
 
-`git clone https://github.com/Islandora/islandora_openseadragon.git`  
+git clone https://github.com/Islandora/islandora_oai.git
 
-`git clone https://github.com/Islandora/islandora_jwplayer.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_audio.git
 
-`git clone https://github.com/Islandora/islandora_fits.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_book.git
 
-`git clone https://github.com/Islandora/islandora_simple_workflow.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_image.git
 
-`git clone https://github.com/Islandora/islandora_book_batch.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_large_image.git
 
-`git clone https://github.com/Islandora/islandora_batch.git  `
+git clone https://github.com/Islandora/islandora_solution_pack_pdf.git
 
-`git clone https://github.com/Islandora/islandora_ip_embargo.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_video.git
 
-`git clone https://github.com/Islandora/islandora_solution_pack_compound.git` 
- 
-`git clone https://github.com/Islandora/islandora_solution_pack_newspaper.git ` 
+git clone https://github.com/Islandora/islandora_paged_content.git
 
-`git clone https://github.com/Islandora/islandora_xacml_editor.git  `
+git clone https://github.com/Islandora/islandora_internet_archive_bookreader.git
 
-`git clone https://github.com/Islandora/islandora_marcxml.git  `
+git clone https://github.com/Islandora/islandora_ocr.git
 
-`git clone https://github.com/discoverygarden/islandora_featured_collection.git`  
+git clone https://github.com/Islandora/islandora_openseadragon.git
 
-`git clone https://github.com/Islandora/islandora_solr_metadata.git ` 
+git clone https://github.com/Islandora/islandora_jwplayer.git
 
-`git clone https://github.com/discoverygarden/solrmetadataconfigs.git ` 
+git clone https://github.com/Islandora/islandora_fits.git
 
-`git clone https://github.com/discoverygarden/islandora_solution_pack_document.git` 
- 
-`git clone https://github.com/discoverygarden/islandora_jodconverter.git  `
+git clone https://github.com/Islandora/islandora_simple_workflow.git
 
-`git clone https://github.com/discoverygarden/islandora_plupload.git  `
+git clone https://github.com/Islandora/islandora_book_batch.git
 
-`git clone https://github.com/discoverygarden/islandora_solution_pack_entities.git `
- 
-`git clone https://github.com/Islandora-Labs/islandora_binary_object.git ` 
+git clone https://github.com/Islandora/islandora_batch.git
 
-`git clone https://github.com/Islandora/islandora_checksum.git ` 
+git clone https://github.com/Islandora/islandora_ip_embargo.git
 
-`git clone https://github.com/Islandora/islandora_checksum_checker.git ` 
+git clone https://github.com/Islandora/islandora_solution_pack_compound.git
 
-`git clone https://github.com/Islandora/islandora_premis.git  `
+git clone https://github.com/Islandora/islandora_solution_pack_newspaper.git
 
-`git clone https://github.com/Islandora/islandora_bagit.git`
+git clone https://github.com/Islandora/islandora_xacml_editor.git
+
+git clone https://github.com/Islandora/islandora_marcxml.git
+
+git clone https://github.com/discoverygarden/islandora_featured_collection.git
+
+git clone https://github.com/Islandora/islandora_solr_metadata.git
+
+git clone https://github.com/discoverygarden/solrmetadataconfigs.git
+
+git clone https://github.com/discoverygarden/islandora_solution_pack_document.git
+
+git clone https://github.com/discoverygarden/islandora_jodconverter.git
+
+git clone https://github.com/discoverygarden/islandora_plupload.git
+
+git clone https://github.com/discoverygarden/islandora_solution_pack_entities.git
+
+git clone https://github.com/Islandora-Labs/islandora_binary_object.git
+
+git clone https://github.com/Islandora/islandora_checksum.git
+
+git clone https://github.com/Islandora/islandora_checksum_checker.git
+
+git clone https://github.com/Islandora/islandora_premis.git
+
+git clone https://github.com/Islandora/islandora_bagit.git
+```
 
 Dependency if `bagit` is to be used: 
  
 `/usr/bin/pear install Archive_Tar  `
 
 #### Libraries <a id="libraries"></a>
- 
-`cd /var/www/drupal7/sites/all/libraries/`  
+```
+cd /var/www/drupal7/sites/all/libraries/
 
-`git clone -b $TUQUE_BRANCH git://github.com/Islandora/tuque.git ` 
+git clone -b $TUQUE_BRANCH git://github.com/Islandora/tuque.git
 
-`git clone  https://github.com/Islandora/internet_archive_bookreader.git bookreader`  
+git clone  https://github.com/Islandora/internet_archive_bookreader.git bookreader
 
-`wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && unzip openseadragon-bin-0.9.129.zip && rm -rf openseadragon-bin-0.9.129.zip && mv openseadragon-bin-0.9.129 openseadragon`
+wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && unzip openseadragon-bin-0.9.129.zip && rm -rf openseadragon-bin-0.9.129.zip && mv openseadragon-bin-0.9.129 openseadragon
+```
 
 `wget http://www.longtailvideo.com/download/jwplayer-3359.zip && unzip -o jwplayer-3359.zip && rm -rf jwplayer-3359.zip`
 **NOTE:** link no longer available. You can sign up to obtain this but licensing requirements are in question. Needs to be discussed.
-`wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload`  
+```
+wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload
 
-`wget http://sourceforge.net/projects/jodconverter/files/JODConverter/2.2.2/jodconverter-2.2.2.zip/download -O jodconverter-2.2.2.zip && unzip -o jodconverter-2.2.2.zip && rm -rf jodconverter-2.2.2.zip ` 
+wget http://sourceforge.net/projects/jodconverter/files/JODConverter/2.2.2/jodconverter-2.2.2.zip/download -O jodconverter-2.2.2.zip && unzip -o jodconverter-2.2.2.zip && rm -rf jodconverter-2.2.2.zip
 
-`mkdir jquery.cycle && cd jquery.cycle && wget http://malsup.github.com/jquery.cycle.all.js`  
+mkdir jquery.cycle && cd jquery.cycle && wget http://malsup.github.com/jquery.cycle.all.js  
 
-`drush dl imagemagick libraries views ctools oauth chart google_analytics views_slideshow views_responsive_grid strongarm features designkit conditional_styles socialmedia widgets features_extra uuid node_export block_class ldap entity colorbox rules xmlsitemap css_injector`  
+drush dl imagemagick libraries views ctools oauth chart google_analytics views_slideshow views_responsive_grid strongarm features designkit conditional_styles socialmedia widgets features_extra uuid node_export block_class ldap entity colorbox rules xmlsitemap css_injector
+```
 
 #### Drupal site install <a id="drupal-site-install"></a>
 
 **Please note that you should consider making the drupal directory permissions more secure. These permissions will allow you to install modules through the drupal web interface however if this functionality is not required recommend locking down permissions using something such as https://github.com/discoverygarden/secure_drupal_file after the install.**
+```
+chown -R $APACHE_USER:$APACHE_USER /var/www/drupal7 
 
-`chown -R $APACHE_USER:$APACHE_USER /var/www/drupal7 ` 
-
-`drush -y site-install standard --account-name=$DRUPAL_ADMIN_USER --account-pass=$DRUPAL_ADMIN_PASS --db-url=mysql://$DRUPAL_DB_USER:$DRUPAL_DB_PASS@localhost/$DRUPAL_DB_NAME  `
+drush -y site-install standard --account-name=$DRUPAL_ADMIN_USER --account-pass=$DRUPAL_ADMIN_PASS --db-url=mysql://$DRUPAL_DB_USER:$DRUPAL_DB_PASS@localhost/$DRUPAL_DB_NAME
+```
 
 ##### Secure settings.php 
  
 `chmod 440 /var/www/drupal7/sites/default/settings.php`
 
 ##### Drush Enables and Configuration  
-
-`drush en block color comment contextual dashboard dblog field field_sql_storage field_ui file filter help image list menu node number options overlay path rdf shortcut system taxonomy text toolbar user bartik seven imagemagick libraries views update ctools oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics views_responsive_grid strongarm features designkit conditional_styles fe_block uuid node_export node_export_features widgets socialmedia block_class colorbox rules entity_token css_injector`
-
-`drush -y colorbox-plugin ` 
-
-`drush -y dis overlay  `
-
-`drush vset islandora_base_url "$ISLANDORA_BASE" ` 
-
-`drush vset islandora_solr_url "$SOLR_BASE" ` 
-
-`drush -y --user=1 en islandora islandora_audio islandora_basic_collection islandora_basic_image islandora_fits islandora_importer islandora_openseadragon islandora_simple_workflow islandora_video islandora_jwplayer islandora_pdf  islandora_paged_content islandora_ocr islandora_internet_archive_bookreader islandora_large_image islandora_book islandora_batch islandora_book_batch xml_form_api xml_form_elements xml_schema_api objective_forms php_lib islandora_solr islandora_solr_config islandora_solr_views islandora_ga_reports islandora_scholar islandora_oai google_analytics_reports islandora_importer xml_form_builder xml_forms islandora_bibliography islandora_scholar_embargo islandora_google_scholar islandora_marcxml islandora_xacml_editor islandora_xacml_api zip_importer pmid_importer ris_importer islandora_bookmark doi_importer endnotexml_importer citation_exporter bartik seven imagemagick libraries views views_ui ctools csl citeproc oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics islandora_compound_object islandora_ip_embargo islandora_newspaper views_slideshow views_slideshow_cycle islandora_featured_collection islandora_solr_metadata islandora_document islandora_jodconverter islandora_entities islandora_entities_csv_import islandora_binary_object`
-
-`drush php-eval "variable_set('islandora_large_image_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'),'default' => 'islandora_openseadragon'));" ` 
-
-`drush php-eval "variable_set('islandora_video_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"`  
-
-`drush php-eval "variable_set('islandora_audio_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"` 
-
-`drush php-eval "variable_set('islandora_book_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'), 'default' => 'islandora_internet_archive_bookreader'));"`  
-
-`drush php-eval "variable_set('islandora_book_page_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'), 'default' => 'islandora_openseadragon'));" ` 
-
-`drush php-eval "variable_set('islandora_newspaper_page_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'),'default' => 'islandora_openseadragon'))"`  
-
-`drush php-eval "variable_set('islandora_newspaper_issue_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'),'default' => 'islandora_internet_archive_bookreader'))"`  
-
-`drush vset islandora_pdf_create_fulltext "1"  `
 ```
+drush en block color comment contextual dashboard dblog field field_sql_storage field_ui file filter help image list menu node number options overlay path rdf shortcut system taxonomy text toolbar user bartik seven imagemagick libraries views update ctools oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics views_responsive_grid strongarm features designkit conditional_styles fe_block uuid node_export node_export_features widgets socialmedia block_class colorbox rules entity_token css_injector
+
+drush -y colorbox-plugin
+
+drush -y dis overlay
+
+drush vset islandora_base_url "$ISLANDORA_BASE"
+
+drush vset islandora_solr_url "$SOLR_BASE"
+
+drush -y --user=1 en islandora islandora_audio islandora_basic_collection islandora_basic_image islandora_fits islandora_importer islandora_openseadragon islandora_simple_workflow islandora_video islandora_jwplayer islandora_pdf  islandora_paged_content islandora_ocr islandora_internet_archive_bookreader islandora_large_image islandora_book islandora_batch islandora_book_batch xml_form_api xml_form_elements xml_schema_api objective_forms php_lib islandora_solr islandora_solr_config islandora_solr_views islandora_ga_reports islandora_scholar islandora_oai google_analytics_reports islandora_importer xml_form_builder xml_forms islandora_bibliography islandora_scholar_embargo islandora_google_scholar islandora_marcxml islandora_xacml_editor islandora_xacml_api zip_importer pmid_importer ris_importer islandora_bookmark doi_importer endnotexml_importer citation_exporter bartik seven imagemagick libraries views views_ui ctools csl citeproc oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics islandora_compound_object islandora_ip_embargo islandora_newspaper views_slideshow views_slideshow_cycle islandora_featured_collection islandora_solr_metadata islandora_document islandora_jodconverter islandora_entities islandora_entities_csv_import islandora_binary_object
+
+drush php-eval "variable_set('islandora_large_image_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'),'default' => 'islandora_openseadragon'));"
+
+drush php-eval "variable_set('islandora_video_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"
+
+drush php-eval "variable_set('islandora_audio_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"
+
+drush php-eval "variable_set('islandora_book_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'), 'default' => 'islandora_internet_archive_bookreader'));"
+
+drush php-eval "variable_set('islandora_book_page_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'), 'default' => 'islandora_openseadragon'));"
+
+drush php-eval "variable_set('islandora_newspaper_page_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'),'default' => 'islandora_openseadragon'))"
+
+drush php-eval "variable_set('islandora_newspaper_issue_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'),'default' => 'islandora_internet_archive_bookreader'))"
+
+drush vset islandora_pdf_create_fulltext "1"
+
 drush vset islandora_pdf_path_to_pdftotext `which pdftotext`  
-```
-`drush vset islandora_metadata_display "islandora_solr_metadata"`  
 
-`drush vset islandora_fits_executable_path "/opt/fits/fits.sh" ` 
-```
+drush vset islandora_metadata_display "islandora_solr_metadata"
+
+drush vset islandora_fits_executable_path "/opt/fits/fits.sh" 
+
 drush vset islandora_book_tesseract `which tesseract`  
-```
-```
+
 drush vset islandora_ocr_tesseract `which tesseract`  
-```
-```
+
 drush vset islandora_batch_java `which java`  
-```
-`drush php-eval "variable_set('islandora_ocr_tesseract_enabled_languages', array('deu-frak' => deu-frak, 'eng' => eng, 'fra' => fra, 'ita' => ita, 'jpn' => jpn, 'por' => por, 'spa' => spa, 'dan-frak' => 0, 'deu' => 0, 'hin' => 0, 'ita_old' => 0, 'rus' => 0, 'slk-frak' => 0, 'spa_old' => 0));" ` 
-```
+
+drush php-eval "variable_set('islandora_ocr_tesseract_enabled_languages', array('deu-frak' => deu-frak, 'eng' => eng, 'fra' => fra, 'ita' => ita, 'jpn' => jpn, 'por' => por, 'spa' => spa, 'dan-frak' => 0, 'deu' => 0, 'hin' => 0, 'ita_old' => 0, 'rus' => 0, 'slk-frak' => 0, 'spa_old' => 0));"
+
 drush vset islandora_lame_url `which lame`
-```
-```
+
 drush vset islandora_video_ffmpeg_path `which ffmpeg`  
-```
-```
+
 drush vset islandora_video_ffmpeg2theora_path `which ffmpeg2theora`  
-```
-```
+
 drush vset islandora_paged_content_gs `which gs`  
-```
-```
-`drush vset imagemagick_convert `which convert``  
-```
-```
+
+drush vset imagemagick_convert `which convert`
+
 drush vset islandora_document_create_fulltext "1"  
-```
-```
-`drush vset islandora_document_path_to_pdftotext `which pdftotext`  
-```
-`drush vset site_name "Stock Islandora and Fedora"`  
 
-`drush vset image_toolkit "imagemagick"`  
+drush vset islandora_document_path_to_pdftotext `which pdftotext`
 
-`drush vset error_level $ERROR_LEVEL`  
+drush vset site_name "Stock Islandora and Fedora"
 
-`drush php-eval "variable_set('oai2_date_field', 'fgs_lastModifiedDate_dt')"`
+drush vset image_toolkit "imagemagick"
+
+drush vset error_level $ERROR_LEVEL
+
+drush php-eval "variable_set('oai2_date_field', 'fgs_lastModifiedDate_dt')"
+```
 
 **Note:** This should be a publicly resolvable URL or viewers will not work for people who cannot resolve the name. You also should ensure that the /etc/hosts file is pointing the name at localhost.
   
-`drush vset islandora_paged_content_djatoka_url "http://hostname/adore-djatoka/"`  
+```
+drush vset islandora_paged_content_djatoka_url "http://hostname/adore-djatoka/"
 
-`drush vset user_register 0 ` 
+drush vset user_register 0 
 
-`drush -y updb`  
+drush -y updb
 
-`drush -y cc all`  
+drush -y cc all
 
-`service $APACHE_SERVICE restart`  
+service $APACHE_SERVICE restart
 
-`drush cc all`
+drush cc all
+```
 
 ### Follow-up Notes <a id="notes"></a>
 
