@@ -322,14 +322,14 @@ Note that you need to ensure that your update-alternatives point to the right ja
 
 `update-alternatives --config javac`
 
-Adds Fedora User and adds fedora environment variables to /etc/profile.d/fedora.sh  
+Create Fedora/Tomcat user which is used to run Tomcat. 
 ```
 FEDORA_USER_TEST=`getent passwd $FEDORA_USER`
 
 useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER
 ```
 
-Make environment variables match with what we set above:  
+Update Tomcat environment variables and JAVA OPTS
 ```
 echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/fedora/tomcat\nexport CATALINA_PID="$CATALINA_HOME/catalina.pid"\nexport JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"\nexport JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre\nexport FEDORA_USER=fedora' > /etc/profile.d/fedora.sh
 
