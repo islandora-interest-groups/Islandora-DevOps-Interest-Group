@@ -892,7 +892,7 @@ wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && u
 ```
 
 `wget http://www.longtailvideo.com/download/jwplayer-3359.zip && unzip -o jwplayer-3359.zip && rm -rf jwplayer-3359.zip`
-**NOTE:** link no longer available. You can sign up to obtain this but licensing requirements are in question. Needs to be discussed.
+**NOTE:** The link to the JWplayer library is no longer available. You must obtain your own copy from JWplayer due to licensing considerations.
 ```
 wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload
 
