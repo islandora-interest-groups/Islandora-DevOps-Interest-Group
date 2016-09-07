@@ -313,7 +313,7 @@ update-alternatives --config javac
 
 cd /opt  
 
-wget http://fits.googlecode.com/files/fits-0.6.2.zip  
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/fits/fits-0.6.2.zip
 
 unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh
 adore-djatoka  
