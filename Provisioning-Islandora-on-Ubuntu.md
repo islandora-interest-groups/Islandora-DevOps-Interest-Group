@@ -870,35 +870,35 @@ drush php-eval "variable_set('islandora_newspaper_page_viewers', array('name' =>
 
 drush php-eval "variable_set('islandora_newspaper_issue_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'),'default' => 'islandora_internet_archive_bookreader'))"  
 
-drush vset islandora_pdf_create_fulltext "1"  
+drush vset islandora_pdf_create_fulltext "1"
 
-drush vset islandora_pdf_path_to_pdftotext `which pdftotext`  
+drush vset islandora_pdf_path_to_pdftotext $(which pdftotext)
 
-drush vset islandora_metadata_display "islandora_solr_metadata"  
+drush vset islandora_metadata_display "islandora_solr_metadata"
 
-drush vset islandora_fits_executable_path "/opt/fits/fits.sh"  
+drush vset islandora_fits_executable_path "/opt/fits/fits.sh"
 
-drush vset islandora_book_tesseract `which tesseract`  
+drush vset islandora_book_tesseract $(which tesseract)
 
-drush vset islandora_ocr_tesseract `which tesseract`  
+drush vset islandora_ocr_tesseract $(which tesseract)
 
-drush vset islandora_batch_java `which java`  
+drush vset islandora_batch_java $(which java)
 
-drush php-eval "variable_set('islandora_ocr_tesseract_enabled_languages', array('deu-frak' => deu-frak, 'eng' => eng, 'fra' => fra, 'ita' => ita, 'jpn' => jpn, 'por' => por, 'spa' => spa, 'dan-frak' => 0, 'deu' => 0, 'hin' => 0, 'ita_old' => 0, 'rus' => 0, 'slk-frak' => 0, 'spa_old' => 0));"  
+drush php-eval "variable_set('islandora_ocr_tesseract_enabled_languages', array('deu-frak' => deu-frak, 'eng' => eng, 'fra' => fra, 'ita' => ita, 'jpn' => jpn, 'por' => por, 'spa' => spa, 'dan-frak' => 0, 'deu' => 0, 'hin' => 0, 'ita_old' => 0, 'rus' => 0, 'slk-frak' => 0, 'spa_old' => 0));"
 
-drush vset islandora_lame_url `which lame`  
+drush vset islandora_lame_url $(which lame)
 
-drush vset islandora_video_ffmpeg_path `which ffmpeg`  
+drush vset islandora_video_ffmpeg_path $(which ffmpeg)
 
-drush vset islandora_video_ffmpeg2theora_path `which ffmpeg2theora`  
+drush vset islandora_video_ffmpeg2theora_path $(which ffmpeg2theora)
 
-drush vset islandora_paged_content_gs `which gs`  
+drush vset islandora_paged_content_gs $(which gs)
 
-drush vset imagemagick_convert `which convert`  
+drush vset imagemagick_convert $(which convert)
 
-drush vset islandora_document_create_fulltext "1"  
+drush vset islandora_document_create_fulltext "1"
 
-drush vset islandora_document_path_to_pdftotext `which pdftotext`  
+drush vset islandora_document_path_to_pdftotext $(which pdftotext)
 
 drush vset site_name "Stock Islandora and Fedora"  
 
