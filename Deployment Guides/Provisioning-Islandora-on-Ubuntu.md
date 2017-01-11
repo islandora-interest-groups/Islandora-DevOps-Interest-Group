@@ -670,7 +670,7 @@ mv $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/Fgs
 ```
 cd ~
 
-git clone git://github.com/discoverygarden/basic-solr-config.git 
+git clone --recursive git://github.com/discoverygarden/basic-solr-config.git 
 
 cd basic-solr-config 
 
