@@ -335,9 +335,9 @@ echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/f
 
 sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh
 sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh
-sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh
+sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g" /etc/profile.d/fedora.sh
 sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh
-sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh
+sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g" /etc/profile.d/fedora.sh
 ```
  
 **Note:** make sure you check `/etc/profile.d/fedora.sh` to ensure everything has been generated properly. If it didn’t you may have closed your shell you may need to resource `islandora-install.properties`. 
