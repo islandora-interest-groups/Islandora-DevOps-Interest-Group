@@ -335,9 +335,9 @@ echo -e 'export FEDORA_HOME=/usr/local/fedora\nexport CATALINA_HOME=/usr/local/f
 
 sed -i "s|JAVA_OPTS=\"-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=/usr/local/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat\"|JAVA_OPTS=\"$JAVA_OPTS\"|g" /etc/profile.d/fedora.sh
 sed -i "s|FEDORA_HOME=\"/usr/local/fedora\"|FEDORA_HOME=\"$FEDORA_HOME\"|g" /etc/profile.d/fedora.sh
-sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g"` /etc/profile.d/fedora.sh
+sed -i "s|CATALINA_HOME=\"/usr/local/fedora/tomcat\"|CATALINA_HOME=\"$CATALINA_HOME\"|g" /etc/profile.d/fedora.sh
 sed -i "s|FEDORA_USER=fedora|FEDORA_USER=$FEDORA_USER|g" /etc/profile.d/fedora.sh
-sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g"` /etc/profile.d/fedora.sh
+sed -i "s|JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre|JAVA_HOME=$JAVA_HOME|g" /etc/profile.d/fedora.sh
 ```
  
 **Note:** make sure you check `/etc/profile.d/fedora.sh` to ensure everything has been generated properly. If it didn’t you may have closed your shell you may need to resource `islandora-install.properties`. 
@@ -376,9 +376,9 @@ chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION
 ```
 cd /opt
 
-wget http://fits.googlecode.com/files/fits-0.6.2.zip
+wget http://projects.iq.harvard.edu/files/fits/files/fits-0.10.1.zip
 
-unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh
+unzip -o fits-0.10.1.zip && rm -rf fits-0.10.1.zip && ln -s fits-0.10.1 fits && chmod a+x /opt/fits/fits.sh
 ```
 
 #### adore-djatoka <a id="adore-djatoka-install"></a>
@@ -670,7 +670,7 @@ mv $CATALINA_HOME/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/Fgs
 ```
 cd ~
 
-git clone git://github.com/discoverygarden/basic-solr-config.git 
+git clone --recursive git://github.com/discoverygarden/basic-solr-config.git 
 
 cd basic-solr-config 
 
