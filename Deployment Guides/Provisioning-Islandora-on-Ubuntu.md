@@ -376,9 +376,9 @@ chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION
 ```
 cd /opt
 
-wget http://fits.googlecode.com/files/fits-0.6.2.zip
+wget http://projects.iq.harvard.edu/files/fits/files/fits-0.10.1.zip
 
-unzip -o fits-0.6.2.zip && rm -rf fits-0.6.2.zip && ln -s fits-0.6.2 fits && chmod a+x /opt/fits/fits.sh
+unzip -o fits-0.10.1.zip && rm -rf fits-0.10.1.zip && ln -s fits-0.10.1 fits && chmod a+x /opt/fits/fits.sh
 ```
 
 #### adore-djatoka <a id="adore-djatoka-install"></a>
