@@ -122,6 +122,8 @@ cat ~/islandora-install.properties
     CRON_SPOOL_DIR="/var/spool/cron/crontabs"
     MONIT_CONF_DIR="/etc/monit/conf.d"
     MONIT_CONFIG_FILE="/etc/monit/monitrc"
+    #Resolvable hostname.
+    DNS_HOSTNAME="yourhostname.local"
 ```
 
 Source environment _(Please note: this must be redone if you close your shell mid-install)_:
@@ -326,7 +328,9 @@ Create Fedora/Tomcat user which is used to run Tomcat.
 ```
 FEDORA_USER_TEST=`getent passwd $FEDORA_USER`
 
-useradd -m -d $FEDORA_HOME -s /bin/false $FEDORA_USER
+useradd -d $FEDORA_HOME -s /bin/false $FEDORA_USER
+#using mkdir since skel dirs cause Fedora installer to prompt to overwrite.
+mkdir /usr/local/fedora
 ```
 
 Update Tomcat environment variables and JAVA OPTS
@@ -600,6 +604,9 @@ unzip -o $CATALINA_HOME/webapps/fedora.war -d $CATALINA_HOME/webapps/fedora
 chown -R $FEDORA_USER:$FEDORA_USER $FEDORA_HOME
 
 chown -R $FEDORA_USER:$FEDORA_USER /usr/share/apache-tomcat-$TOMCAT_VERSION
+
+#Needed to be compatible with basic-solr-configs
+ln -s /usr/share/tomcat /usr/local/fedora/tomcat
 ```
 
 Start and stop tomcat so fedora creates some dirs:
@@ -831,7 +838,7 @@ git clone https://github.com/Islandora/islandora_ocr.git
 
 git clone https://github.com/Islandora/islandora_openseadragon.git
 
-git clone https://github.com/Islandora/islandora_jwplayer.git
+git clone https://github.com/Islandora/islandora_videojs.git
 
 git clone https://github.com/Islandora/islandora_fits.git
 
@@ -889,11 +896,7 @@ git clone -b $TUQUE_BRANCH git://github.com/Islandora/tuque.git
 git clone  https://github.com/Islandora/internet_archive_bookreader.git bookreader
 
 wget http://openseadragon.github.io/releases/openseadragon-bin-0.9.129.zip  && unzip openseadragon-bin-0.9.129.zip && rm -rf openseadragon-bin-0.9.129.zip && mv openseadragon-bin-0.9.129 openseadragon
-```
 
-`wget http://www.longtailvideo.com/download/jwplayer-3359.zip && unzip -o jwplayer-3359.zip && rm -rf jwplayer-3359.zip`
-**NOTE:** The link to the JWplayer library is no longer available. You must obtain your own copy from JWplayer due to licensing considerations.
-```
 wget https://github.com/moxiecode/plupload/archive/v1.5.8.zip -O v1.5.8.zip && unzip -o v1.5.8.zip && rm -rf v1.5.8.zip && mv plupload-1.5.8 plupload
 
 wget http://sourceforge.net/projects/jodconverter/files/JODConverter/2.2.2/jodconverter-2.2.2.zip/download -O jodconverter-2.2.2.zip && unzip -o jodconverter-2.2.2.zip && rm -rf jodconverter-2.2.2.zip
@@ -918,7 +921,7 @@ drush -y site-install standard --account-name=$DRUPAL_ADMIN_USER --account-pass=
 
 ##### Drush Enables and Configuration  
 ```
-drush en block color comment contextual dashboard dblog field field_sql_storage field_ui file filter help image list menu node number options overlay path rdf shortcut system taxonomy text toolbar user bartik seven imagemagick libraries views update ctools oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics views_responsive_grid strongarm features designkit conditional_styles fe_block uuid node_export node_export_features widgets socialmedia block_class colorbox rules entity_token css_injector
+drush -y en block color comment contextual dashboard dblog field field_sql_storage field_ui file filter help image list menu node number options overlay path rdf shortcut system taxonomy text toolbar user bartik seven imagemagick libraries views update ctools oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics views_responsive_grid strongarm features designkit conditional_styles fe_block uuid node_export node_export_features widgets socialmedia block_class colorbox rules entity_token css_injector
 
 drush -y colorbox-plugin
 
@@ -928,13 +931,15 @@ drush vset islandora_base_url "$ISLANDORA_BASE"
 
 drush vset islandora_solr_url "$SOLR_BASE"
 
-drush -y --user=1 en islandora islandora_audio islandora_basic_collection islandora_basic_image islandora_fits islandora_importer islandora_openseadragon islandora_simple_workflow islandora_video islandora_jwplayer islandora_pdf  islandora_paged_content islandora_ocr islandora_internet_archive_bookreader islandora_large_image islandora_book islandora_batch islandora_book_batch xml_form_api xml_form_elements xml_schema_api objective_forms php_lib islandora_solr islandora_solr_config islandora_solr_views islandora_ga_reports islandora_scholar islandora_oai google_analytics_reports islandora_importer xml_form_builder xml_forms islandora_bibliography islandora_scholar_embargo islandora_google_scholar islandora_marcxml islandora_xacml_editor islandora_xacml_api zip_importer pmid_importer ris_importer islandora_bookmark doi_importer endnotexml_importer citation_exporter bartik seven imagemagick libraries views views_ui ctools csl citeproc oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics islandora_compound_object islandora_ip_embargo islandora_newspaper views_slideshow views_slideshow_cycle islandora_featured_collection islandora_solr_metadata islandora_document islandora_jodconverter islandora_entities islandora_entities_csv_import islandora_binary_object
+drush -y --user=1 en islandora islandora_audio islandora_basic_collection islandora_basic_image islandora_fits islandora_importer islandora_openseadragon islandora_simple_workflow islandora_video islandora_videojs islandora_pdf  islandora_paged_content islandora_ocr islandora_internet_archive_bookreader islandora_large_image islandora_book islandora_batch islandora_book_batch xml_form_api xml_form_elements xml_schema_api objective_forms php_lib islandora_solr islandora_solr_config islandora_solr_views islandora_ga_reports islandora_scholar islandora_oai google_analytics_reports islandora_importer xml_form_builder xml_forms islandora_bibliography islandora_scholar_embargo islandora_google_scholar islandora_marcxml islandora_xacml_editor islandora_xacml_api zip_importer pmid_importer ris_importer islandora_bookmark doi_importer endnotexml_importer citation_exporter bartik seven imagemagick libraries views views_ui ctools csl citeproc oauth_common oauth_common_providerui system_charts chart_views chart googleanalytics islandora_compound_object islandora_ip_embargo islandora_newspaper views_slideshow views_slideshow_cycle islandora_featured_collection islandora_solr_metadata islandora_document islandora_jodconverter islandora_entities islandora_entities_csv_import islandora_binary_object
+
+drush -y videojs-plugin
 
 drush php-eval "variable_set('islandora_large_image_viewers', array('name' => array('none' => 'none', 'islandora_openseadragon' => 'islandora_openseadragon'),'default' => 'islandora_openseadragon'));"
 
-drush php-eval "variable_set('islandora_video_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"
+drush php-eval "variable_set('islandora_video_viewers', array('name' => array('none' => 'none', 'islandora_videojs' => 'islandora_videojs'),'default' => 'islandora_videojs'));"
 
-drush php-eval "variable_set('islandora_audio_viewers', array('name' => array('none' => 'none', 'islandora_jwplayer' => 'islandora_jwplayer'),'default' => 'islandora_jwplayer'));"
+drush php-eval "variable_set('islandora_audio_viewers', array('name' => array('none' => 'none', 'islandora_videojs' => 'islandora_videojs'),'default' => 'islandora_videojs'));"
 
 drush php-eval "variable_set('islandora_book_viewers', array('name' => array('none' => 'none', 'islandora_internet_archive_bookreader' => 'islandora_internet_archive_bookreader'), 'default' => 'islandora_internet_archive_bookreader'));"
 
@@ -986,7 +991,7 @@ drush php-eval "variable_set('oai2_date_field', 'fgs_lastModifiedDate_dt')"
 **Note:** This should be a publicly resolvable URL or viewers will not work for people who cannot resolve the name. You also should ensure that the /etc/hosts file is pointing the name at localhost.
   
 ```
-drush vset islandora_paged_content_djatoka_url "http://hostname/adore-djatoka/"
+drush vset islandora_paged_content_djatoka_url $DNS_HOSTNAME
 
 drush vset user_register 0 
 
