@@ -2,12 +2,22 @@
 
 ## Convenors
 
-* [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
-* Gavin Morris ([Common Media Inc.](http://commonmedia.com))
+* [Bryan J. Brown](https://github.com/bryjbrown) (Florida State University)
+* [Gavin Morris](https://github.com/g7morris) (Born-Digital, Common Media Inc.)
 
 ## How to participate
 
-Send Mark a Skype contact request (mark.jordan50)
+There is an online meeting held every second Wednesday of the month at 11:00 AM-noon PST / 2:00-3:00 PM EST.
+
+Join by visiting this [Google Hangouts](https://hangouts.google.com/hangouts/_/commonmediainc.com/islandor-devops) URL.
+
+If you don't have the Hangouts browser plugin installed, you will be prompted to install it.
+
+Additionally, the Group announces changes / meeting updates here:
+
+- [Meetings on Github.com](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/tree/master/meetings)
+- [Islandora Google Group](https://groups.google.com/forum/?hl=en#!forum/islandora-dev)
+- [Islandora Developer Google Group](https://groups.google.com/forum/?hl=en#!forum/islandora)
 
 ## Terms of Reference
 
@@ -19,7 +29,7 @@ Send Mark a Skype contact request (mark.jordan50)
  to explore ways of increasing scalability of the various components of the Islandora stack
   * create/Maintain a version matrix
   * consult with the CLAW project as needed
-* The interest group will meet once a month virtually (eg. via Skype). A call for agenda items will be posted to the Islandora Google Group 1 week prior to the meeting. The convenors will appoint a note taker for the meeting and meeting notes will be made available at some url.
+* The interest group will meet once a month virtually (eg. via Google Hangouts). A call for agenda items will be posted to the Islandora Google Group 1 week prior to the meeting. The convenors will appoint a note taker for the meeting and meeting notes will be made available at some url.
 * The convenors will produce a report to be submitted to the Islandora Roadmap Committee following the IDOIG’s meeting.
 
 ## Links
@@ -30,20 +40,10 @@ Send Mark a Skype contact request (mark.jordan50)
 
 ## Membership
 
-* [Andy Wagner](https://github.com/rarian) (University of Toronto)
-* [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
-* [James Griffin](https://github.com/jrgriffiniii) (Lafayette College Libraries)
-* [Brad Spry](https://github.com/bradspry) (UNC Charlotte)
-* Diego Pino (REUNA)
-* Lingling Jiang (UTSC)
 * [Melissa Anez](https://github.com/manez) (Islandora Foundation)
-* [Kevin Clarke](https://github.com/ksclarke) (UCLA)
-* Gary Phillips
-* Gavin Morris ([Common Media Inc.](http://commonmedia.com))
-* Logan Cox
-* Alex Garnett
+* [Bryan J. Brown](https://github.com/bryjbrown) (Florida State University)
+* [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
+* [Gavin Morris](https://github.com/g7morris) (Born-Digital, Common Media Inc.)
+* [Brad Spry](https://github.com/bradspry) (UNC Charlotte)
+* [Luke Taylor](https://github.com/lutaylor) (Discoverygarden)
 * Mark McFate
-* Phil Redmon
-* Randy Fischer
-* [Jacob Sanford](https://github.com/JacobSanford) (University of New Brunswick)
-* Luke Taylor (Discoverygarden)
