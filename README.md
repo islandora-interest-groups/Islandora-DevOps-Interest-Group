@@ -42,6 +42,7 @@ Additionally, the Group announces changes / meeting updates here:
 
 * [Melissa Anez](https://github.com/manez) (Islandora Foundation)
 * [Bryan J. Brown](https://github.com/bryjbrown) (Florida State University)
+* [Cary Gordon](https://github.com/highermath) (Cherry Hill Company)
 * [Mark Jordan](https://github.com/mjordan) (Simon Fraser University)
 * [Gavin Morris](https://github.com/g7morris) (Born-Digital, Common Media Inc.)
 * [Brad Spry](https://github.com/bradspry) (UNC Charlotte)
