@@ -1,7 +1,14 @@
 # Islandora DevOps Interest Group
 
+As of April 2018, this group is taking an **indefinite hiatus** from having online meetings. 
+
+For those interested within the Islandora community wanting to start up the monthly online meetings, please contact Melissa Anez at the Islandora Foundation directly for steps on how to do that. 
+
+Please note: This doesn't impact any other projects, discussions, deployment guides or ongoing development of the islandora vagrant box. 
+
 ## Convenors
 
+The last two convenors were: 
 * [Bryan J. Brown](https://github.com/bryjbrown) (Florida State University)
 * [Gavin Morris](https://github.com/g7morris) (Born-Digital, Common Media Inc.)
 
@@ -49,4 +56,4 @@ Additionally, the Group announces changes / meeting updates here:
 * [Gavin Morris](https://github.com/g7morris) (Born-Digital, Common Media Inc.)
 * [Brad Spry](https://github.com/bradspry) (UNC Charlotte)
 * [Luke Taylor](https://github.com/lutaylor) (Discoverygarden)
-* Mark McFate
+* [Mark McFate](https://github.com/McFateM) (Grinnell College)
