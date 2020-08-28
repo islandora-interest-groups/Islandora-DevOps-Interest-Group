@@ -22,7 +22,7 @@ If you don't have the Hangouts browser plugin installed, you will be prompted to
 
 Additionally, the Group announces changes / meeting updates here:
 
-- [Meetings on Github.com](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/tree/master/meetings)
+- [Meetings on Github.com](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/tree/main/meetings)
 - [Islandora Google Group](https://groups.google.com/forum/?hl=en#!forum/islandora-dev)
 - [Islandora Developer Google Group](https://groups.google.com/forum/?hl=en#!forum/islandora)
 
@@ -43,7 +43,7 @@ Additionally, the Group announces changes / meeting updates here:
 * [Islandora DevOps Interest Group Wiki](https://github.com/Islandora/Islandora-DevOps-Interest-Group/wiki)
 * [Islandora Deployments](https://github.com/Islandora/islandora_deployments)
 * [Islandora Vagrant](https://github.com/Islandora-Labs/islandora_vagrant)
-* [Automating content production and loading](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/blob/master/automation.md)
+* [Automating content production and loading](https://github.com/islandora-interest-groups/Islandora-DevOps-Interest-Group/blob/main/automation.md)
 
 ## Membership
 
